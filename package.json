@@ -1,7 +1,7 @@
 {
-  "name": "domomaker",
+  "name": "forecafe",
   "version": "1.0.0",
-  "description": "A Simple Login Example using Node.js, Mongo and Redis",
+  "description": "A cafe based sharing platform",
   "main": "./server/app.js",
   "scripts": {
     "webpack": "webpack",
@@ -18,7 +18,7 @@
     "Redis",
     "Login"
   ],
-  "author": "Cody Van De Mark / Austin Willoughby / Reva Sathe",
+  "author": "Reva Sathe",
   "license": "UNLICENSED",
   "devDependencies": {
     "@babel/core": "^7.26.0",

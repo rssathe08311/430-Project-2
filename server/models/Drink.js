@@ -15,7 +15,15 @@ const DrinkSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-
+  ingredients: {
+    type: Array,
+    required: true,
+  },
+  //have like a checkbox or something that returns boolean that fills this position
+  favorite: {
+    type: Boolean,
+    required: true,
+  },
   owner: {
     type: mongoose.Schema.ObjectId,
     required: true,
@@ -30,6 +38,8 @@ const DrinkSchema = new mongoose.Schema({
 DrinkSchema.statics.toAPI = (doc) => ({
   name: doc.name,
   temperature: doc.temperature,
+  ingredients: doc.ingredients,
+  favorite: doc.favorite,
 });
 
 const DrinkModel = mongoose.model('Drink', DrinkSchema);
