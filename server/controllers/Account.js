@@ -1,4 +1,5 @@
 const models = require('../models');
+const AccountModel = require('../models/Account');
 
 const { Account } = models;
 
@@ -55,10 +56,28 @@ const signup = async (req, res) => {
   }
 };
 
+const getUserProfile = async (req, res) => {
+  try {
+    const account = await AccountModel.findByID(req.session.account._id)
+                      .populate('friends', 'username profilePicture')
+                      .populate('favoriteDrinks', 'name temperature ingredients')
+                      .exec();
+    if(!account) {
+      return res.status(404).json({ error: 'Account not found' });
+    }
+
+    res.json(account);
+  }
+  catch (err) {
+    res.status(500).json({ error: 'An error occurred'})
+  }
+}
+
 // module exports
 module.exports = {
   loginPage,
   login,
   logout,
   signup,
+  getUserProfile,
 };

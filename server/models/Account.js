@@ -33,6 +33,21 @@ const AccountSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  profilePicture: {
+    type: String, // URL or file path to the profile picture
+    default: '/assets/img/default-profile.png',
+  },
+  friends: [{
+    type: mongoose.Schema.ObjectId,
+    ref: 'Account', 
+  }],
+  favoriteDrinks: [{
+    type: mongoose.Schema.ObjectId,
+    ref: 'Drink', // References drinks marked as favorites
+  }],
+  locations: [{
+    type: String, // Example: "City, Country" or "Latitude, Longitude"
+  }],
   createdDate: {
     type: Date,
     default: Date.now,

@@ -9,13 +9,15 @@ const handleDrink = (e, onDrinkAdded) => {
 
     const name = e.target.querySelector('#drinkName').value;
     const temperature = e.target.querySelector('#drinkTemp').value;
+    const ingredients = e.target.querySelector('#drinkIngredients').value.split(',').map(item => item.trim());
+    const favorite = e.target.querySelector('#drinkFavorite').checked;
 
-    if(!name || !temperature) {
+    if(!name || !temperature || ingredients.length === 0) {
         helper.handleDrinkError('All fields are required');
         return false;
     }
 
-    helper.sendDrinkPost(e.target.action, { name, temperature }, onDrinkAdded);
+    helper.sendDrinkPost(e.target.action, { name, temperature, ingredients, favorite }, onDrinkAdded);
     return false;
 }
 
@@ -30,8 +32,19 @@ const DrinkForm = (props) => {
         >
             <label htmlFor='name'>Name: </label>
             <input id='drinkName' type='text' name='name' placeholder='Drink Name' />
-            <label htmlFor='temperature'>Temperature: </label>
-            <input id='drinkTemp' type='number' min='0' name='temperature' />
+            
+            <label htmlFor="temperature">Temperature: </label>
+            <select id="drinkTemp" name="temperature">
+                <option value="Hot">Hot</option>
+                <option value="Cold">Cold</option>
+            </select>
+
+            <label htmlFor='ingredients'>Ingredients (comma-separated):</label>
+            <input id="drinkIngredients" type="text" name="ingredients" placeholder="e.g., coffee, tea, water, sugar" />
+
+            <label htmlFor="favorite">Favorite: </label>
+            <input id="drinkFavorite" type="checkbox" name="favorite" />
+
             <input className='makeDrinkSubmit' type='submit' value='Make Drink' />
         </form>
     )

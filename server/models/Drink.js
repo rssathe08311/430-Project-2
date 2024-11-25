@@ -11,18 +11,18 @@ const DrinkSchema = new mongoose.Schema({
     set: setName,
   },
   temperature: {
-    type: Number,
+    type: String,
     required: true,
+    enum: ['Hot', 'Cold'],
     trim: true,
   },
   ingredients: {
-    type: Array,
+    type: [String],
     required: true,
   },
-  //have like a checkbox or something that returns boolean that fills this position
   favorite: {
     type: Boolean,
-    required: true,
+    default: false,
   },
   owner: {
     type: mongoose.Schema.ObjectId,
