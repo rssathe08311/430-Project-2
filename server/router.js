@@ -13,14 +13,17 @@ const router = (app) => {
 
   app.get('/logout', mid.requiresLogin, controllers.Account.logout);
 
+  app.get('/home', mid.requiresLogin, controllers.Home.makerPage);
+
   app.get('/maker', mid.requiresLogin, controllers.Domo.makerPage);
   app.post('/maker', mid.requiresLogin, controllers.Domo.makeDomo);
 
   app.get('/drink', mid.requiresLogin, controllers.Drink.makerPage);
   app.post('/drink', mid.requiresLogin, controllers.Drink.makeDrink);
+  app.post('/removeDrink', mid.requiresLogin, controllers.Drink.removeDrinks);
 
   app.get('/profile', mid.requiresLogin, controllers.Account.makerPage);
-  //app.post('/profile', mid.requiresLogin, controllers.Drink.makeDrink);
+  // app.post('/profile', mid.requiresLogin, controllers.Drink.makeDrink);
 
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
 };

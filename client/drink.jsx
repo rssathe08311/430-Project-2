@@ -42,8 +42,11 @@ const DrinkForm = (props) => {
             <label htmlFor='ingredients'>Ingredients:</label>
             <input id="drinkIngredients" type="text" name="ingredients" placeholder="e.g., coffee, tea, water, sugar" />
 
-            <label htmlFor="favorite">Favorite: </label>
-            <input id="drinkFavorite" type="checkbox" name="favorite" />
+            <div id='favCheck'>
+                <label htmlFor="favorite">Favorite: </label>
+                <input id="drinkFavorite" type="checkbox" name="favorite" />
+            </div>
+            
 
             <input className='makeDrinkSubmit' type='submit' value='Make Drink' />
         </form>
@@ -62,6 +65,28 @@ const DrinkList = (props) => {
         loadDrinksFromServer();
     }, [props.reloadDrinks]);
 
+    const handleRemoveDrink = async (id) => {
+        try {
+            const response = await fetch('/removeDrink', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error('Error removing drink:', errorData.error);
+                return;
+            }
+
+            props.triggerReload(); // Refresh the drink list
+        } catch (err) {
+            console.error('Error sending remove request:', err);
+        }
+    };
+
     if(drinks.length === 0) {
         return (
             <div className='drinksList'>
@@ -74,11 +99,12 @@ const DrinkList = (props) => {
         console.log(drink.temperature)
         console.log(drink.ingredients)
         return (
-            <div key={drink.id} className='drink'>
-                <img src='/assets/img/drink.png' alt="drink" className='drinkFace' />
+            <div key={drink._id} className='drink'>
+                <img src='/assets/img/logo.png' alt="drink" className='drinkFace' />
                 <h3 className='drinkName'>{drink.name}</h3>
                 <h3 className='drinkAge'>Temperature: {drink.temperature}</h3>
                 <h3 className='drinkIngredients'>Ingredients: {drink.ingredients}</h3>
+                <button onClick={() => handleRemoveDrink(drink._id)}>Delete</button>
             </div>
         );
     });
@@ -99,7 +125,7 @@ const App = () => {
                 <DrinkForm triggerReload={() => setReloadDrinks(!reloadDrinks)}/>
             </div>
             <div id='drinks'>
-                <DrinkList drinks={[]} reloadDrinks={reloadDrinks} />
+                <DrinkList drinks={[]} reloadDrinks={reloadDrinks} triggerReload={() => setReloadDrinks(!reloadDrinks)} />
             </div>
         </div>
     );

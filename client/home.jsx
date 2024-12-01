@@ -16,3 +16,5 @@ const DisplayDrinks = () => {};
 const DisplayFriends = () => {};
 
 const DisplayLocations = () => {};
+
+//also create spaces for ads

@@ -10,7 +10,7 @@ const helmet = require('helmet');
 const session = require('express-session');
 const RedisStore = require('connect-redis').default;
 const redis = require('redis');
-const multer = require('multer');
+// const multer = require('multer');
 const fs = require('fs');
 
 const router = require('./router.js');
@@ -54,31 +54,31 @@ redisClient.connect().then(() => {
   app.engine('handlebars', expressHandlebars.engine({ defaultLayout: '' }));
   app.set('view engine', 'handlebars');
   app.set('views', `${__dirname}/../views`);
- 
+
   const uploadDir = './uploads';
   if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir);
   }
 
-  const storage = multer.diskStorage({
-    destination: uploadDir,
-    filename: (req, file, cb) => {
-      cb(null, `${Date.now()}-${file.originalname}`);
-    },
-  });
+  // const storage = multer.diskStorage({
+  //  destination: uploadDir,
+  //  filename: (req, file, cb) => {
+  //    cb(null, `${Date.now()}-${file.originalname}`);
+  //  },
+  // });
 
-  const upload = multer({ storage });
-
-  app.post('/uploadProfilePicture', upload.single('profilePicture'), (req, res) => {
-    if (!req.file) {
-      return res.status(400).json({ error: 'No file uploaded' });
-    }
-
-    const profilePicturePath = `/uploads/${req.file.filename}`;
-    res.json({ profilePicture: profilePicturePath });
-  });
-
-  app.use('/uploads', express.static(path.resolve(uploadDir)));
+  // const upload = multer({ storage });
+  //
+  // app.post('/uploadProfilePicture', upload.single('profilePicture'), (req, res) => {
+  //  if (!req.file) {
+  //    return res.status(400).json({ error: 'No file uploaded' });
+  //  }
+  //
+  //  const profilePicturePath = `/uploads/${req.file.filename}`;
+  //  res.json({ profilePicture: profilePicturePath });
+  // });
+  //
+  // app.use('/uploads', express.static(path.resolve(uploadDir)));
 
   router(app);
 

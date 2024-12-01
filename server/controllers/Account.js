@@ -1,5 +1,5 @@
 const models = require('../models');
-const AccountModel = require('../models/Account');
+// const AccountModel = require('../models/Account');
 
 const { Account } = models;
 
@@ -59,21 +59,37 @@ const signup = async (req, res) => {
 
 const getUserProfile = async (req, res) => {
   try {
-    const account = await AccountModel.findAccountById(req.session.account._id)
-                      .populate('friends', 'username profilePicture')
-                      .populate('favoriteDrinks', 'name temperature ingredients')
-                      .exec();
-    if(!account) {
-      return res.status(404).json({ error: 'Account not found' });
+    if (!req.session.account || !req.session.account._id) {
+      return res.status(400).json({ error: 'User not logged in or invalid session.' });
     }
 
-    res.json(account);
-  }
-  catch (err) {
-    res.status(500).json({ error: 'An error occurred'})
-  }
-}
+    // Fetch the user profile
+    const query = { _id: req.session.account._id };
+    const account = await Account.findOne(query)
+      .select('username profilePicture friends favoriteDrinks locations') // Select specific fields
+      .populate('friends', 'username profilePicture') // Populate friends
+      .populate('favoriteDrinks', 'name temperature ingredients') // Populate favorite drinks
+      .lean() // Convert the document to plain JS object
+      .exec();
 
+    // Check if the account exists
+    if (!account) {
+      return res.status(404).json({ error: 'Account not found.' });
+    }
+
+    // Respond with the account data
+    return res.json({
+      username: account.username,
+      profilePicture: account.profilePicture || '/assets/img/default-profile.png',
+      friends: account.friends || [],
+      favoriteDrinks: account.favoriteDrinks || [],
+      locations: account.locations || [],
+    });
+  } catch (err) {
+    console.error(`Error fetching user profile: ${err.message}`);
+    return res.status(500).json({ error: 'Error retrieving user profile.' });
+  }
+};
 
 // module exports
 module.exports = {

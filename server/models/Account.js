@@ -39,7 +39,7 @@ const AccountSchema = new mongoose.Schema({
   },
   friends: [{
     type: mongoose.Schema.ObjectId,
-    ref: 'Account', 
+    ref: 'Account',
   }],
   favoriteDrinks: [{
     type: mongoose.Schema.ObjectId,
@@ -89,46 +89,3 @@ AccountSchema.statics.authenticate = async (username, password, callback) => {
 
 AccountModel = mongoose.model('Account', AccountSchema);
 module.exports = AccountModel;
-
-
-//AccountSchema.statics.findAccountById = async (id) => {
-//  try {
-//    const account = await AccountModel.findOne({ _id: id })
-//      .populate('friends', 'username profilePicture')
-//      .populate('favoriteDrinks', 'name temperature ingredients')
-//      .exec();
-//
-//    if (!account) {
-//      throw new Error('Account not found');
-//    }
-//
-//    return account; // Caller handles the resolved value
-//  } catch (err) {
-//    throw new Error(`Error retrieving account: ${err.message}`);
-//  }
-//};
-//
-//
-////AccountSchema.statics.findByIdDetails = async (id) => {
-////
-////  try {
-////    const account = await AccountModel.findOne({_id: id })
-////    .populate('friends', 'username profilePicture')
-////    .populate('favoriteDrinks', 'name temperature ingredients')
-////    .exec();
-////
-////    if(!account) {
-////      throw new Error('Account not found');
-////    }
-////
-////    return account;
-////  }
-////  catch (err) {
-////    throw new Error(`Error retrieving account: ${err.message}`);
-////  }
-////  
-////}
-//
-//AccountModel = mongoose.model('Account', AccountSchema);
-//module.exports = AccountModel;
-//
