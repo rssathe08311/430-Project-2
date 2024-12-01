@@ -17,7 +17,7 @@ const DrinkSchema = new mongoose.Schema({
     trim: true,
   },
   ingredients: {
-    type: [String],
+    type: String,
     required: true,
   },
   favorite: {

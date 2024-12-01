@@ -16,13 +16,16 @@ const makeDrink = async (req, res) => {
   const drinkData = {
     name: req.body.name,
     temperature: req.body.temperature,
+    ingredients: req.body.ingredients,
+    favorite: req.body.favorite,
     owner: req.session.account._id,
   };
 
   try {
     const newDrink = new Drink(drinkData);
     await newDrink.save();
-    return res.status(201).json({ name: newDrink.name, temperature: newDrink.temperature });
+    console.log("ingredients " + newDrink.ingredients)
+    return res.status(201).json({ name: newDrink.name, temperature: newDrink.temperature, ingredients: newDrink.ingredients, favorite: newDrink.favorite });
   } catch (err) {
     console.error('Error creating drink:', err.message);
     console.error('Stack trace:', err.stack);

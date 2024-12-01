@@ -9,7 +9,7 @@ const handleDrink = (e, onDrinkAdded) => {
 
     const name = e.target.querySelector('#drinkName').value;
     const temperature = e.target.querySelector('#drinkTemp').value;
-    const ingredients = e.target.querySelector('#drinkIngredients').value.split(',').map(item => item.trim());
+    const ingredients = e.target.querySelector('#drinkIngredients').value;
     const favorite = e.target.querySelector('#drinkFavorite').checked;
 
     if(!name || !temperature || ingredients.length === 0) {
@@ -39,7 +39,7 @@ const DrinkForm = (props) => {
                 <option value="Cold">Cold</option>
             </select>
 
-            <label htmlFor='ingredients'>Ingredients (comma-separated):</label>
+            <label htmlFor='ingredients'>Ingredients:</label>
             <input id="drinkIngredients" type="text" name="ingredients" placeholder="e.g., coffee, tea, water, sugar" />
 
             <label htmlFor="favorite">Favorite: </label>
@@ -71,11 +71,14 @@ const DrinkList = (props) => {
     }
 
     const drinkNodes = drinks.map(drink => {
+        console.log(drink.temperature)
+        console.log(drink.ingredients)
         return (
             <div key={drink.id} className='drink'>
                 <img src='/assets/img/drink.png' alt="drink" className='drinkFace' />
-                <h3 className='drinkName'>Name: {drink.name}</h3>
+                <h3 className='drinkName'>{drink.name}</h3>
                 <h3 className='drinkAge'>Temperature: {drink.temperature}</h3>
+                <h3 className='drinkIngredients'>Ingredients: {drink.ingredients}</h3>
             </div>
         );
     });

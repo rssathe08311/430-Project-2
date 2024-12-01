@@ -4,6 +4,7 @@ const AccountModel = require('../models/Account');
 const { Account } = models;
 
 const loginPage = (req, res) => res.render('login');
+const makerPage = async (req, res) => res.render('profile');
 
 const logout = (req, res) => {
   req.session.destroy();
@@ -58,7 +59,7 @@ const signup = async (req, res) => {
 
 const getUserProfile = async (req, res) => {
   try {
-    const account = await AccountModel.findByID(req.session.account._id)
+    const account = await AccountModel.findAccountById(req.session.account._id)
                       .populate('friends', 'username profilePicture')
                       .populate('favoriteDrinks', 'name temperature ingredients')
                       .exec();
@@ -73,9 +74,11 @@ const getUserProfile = async (req, res) => {
   }
 }
 
+
 // module exports
 module.exports = {
   loginPage,
+  makerPage,
   login,
   logout,
   signup,
