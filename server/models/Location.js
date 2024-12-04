@@ -10,20 +10,22 @@ const LocationnSchema = new mongoose.Schema({
     trim: true,
     set: setName,
   },
-  // temperature: {
-  //  type: Number,
-  //  required: true,
-  //  trim: true,
-  // },
-  // ingredients: {
-  //  type: Array,
-  //  required: true,
-  // },
-  /// /have like a checkbox or something that returns boolean that fills this position
-  // favorite: {
-  //  type: Boolean,
-  //  required: true,
-  // },
+  address: {
+    type: String,
+    required: false,
+    trim: true,
+  },
+  location: {
+    type: {
+      type: String,
+      enum: ['Point'], // GeoJSON type must be "Point" for Mapbox
+      required: true,
+    },
+    coordinates: {
+      type: [Number], // [longitude, latitude]
+      required: true,
+    },
+  },
   owner: {
     type: mongoose.Schema.ObjectId,
     required: true,
@@ -37,9 +39,8 @@ const LocationnSchema = new mongoose.Schema({
 
 LocationnSchema.statics.toAPI = (doc) => ({
   name: doc.name,
-  temperature: doc.temperature,
-  ingredients: doc.ingredients,
-  favorite: doc.favorite,
+  address: doc.address,
+  location: doc.location,
 });
 
 const LocationModel = mongoose.model('Location', LocationnSchema);

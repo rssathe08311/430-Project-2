@@ -81,7 +81,7 @@ const DrinkList = (props) => {
                 return;
             }
 
-            props.triggerReload(); // Refresh the drink list
+            props.triggerReload();
         } catch (err) {
             console.error('Error sending remove request:', err);
         }

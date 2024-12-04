@@ -225,6 +225,11 @@ strong {
 }
 
 
+#map {
+    margin: 20px 0;
+}
+
+
 
 /* Drink-related styles */
 #drinks {
