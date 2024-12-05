@@ -15,7 +15,7 @@ const LocationnSchema = new mongoose.Schema({
     required: false,
     trim: true,
   },
-  location: {
+  loc: {
     type: {
       type: String,
       enum: ['Point'], // GeoJSON type must be "Point" for Mapbox
@@ -40,7 +40,7 @@ const LocationnSchema = new mongoose.Schema({
 LocationnSchema.statics.toAPI = (doc) => ({
   name: doc.name,
   address: doc.address,
-  location: doc.location,
+  loc: doc.loc,
 });
 
 const LocationModel = mongoose.model('Location', LocationnSchema);

@@ -60,26 +60,6 @@ redisClient.connect().then(() => {
     fs.mkdirSync(uploadDir);
   }
 
-  // const storage = multer.diskStorage({
-  //  destination: uploadDir,
-  //  filename: (req, file, cb) => {
-  //    cb(null, `${Date.now()}-${file.originalname}`);
-  //  },
-  // });
-
-  // const upload = multer({ storage });
-  //
-  // app.post('/uploadProfilePicture', upload.single('profilePicture'), (req, res) => {
-  //  if (!req.file) {
-  //    return res.status(400).json({ error: 'No file uploaded' });
-  //  }
-  //
-  //  const profilePicturePath = `/uploads/${req.file.filename}`;
-  //  res.json({ profilePicture: profilePicturePath });
-  // });
-  //
-  // app.use('/uploads', express.static(path.resolve(uploadDir)));
-
   router(app);
 
   app.listen(port, (err) => {

@@ -1,11 +1,13 @@
 const path = require('path');
 
+
 module.exports = {
     entry: {
         app: './client/maker.jsx',
         drink: './client/drink.jsx',
         login: './client/login.jsx',
-        profile: './client/profile.jsx'
+        profile: './client/profile.jsx',
+        location: './client/location.jsx',
     },
     module: {
         rules: [
@@ -16,6 +18,10 @@ module.exports = {
                     loader: "babel-loader",
                 },
             },
+            {
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader'],
+            },
         ],
     },
     mode: 'production',
@@ -25,5 +31,8 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'hosted'),
         filename: '[name]Bundle.js',
+    },
+    resolve: {
+        extensions: ['.js', '.jsx'],
     },
 };
