@@ -43,7 +43,7 @@ const AccountSchema = new mongoose.Schema({
   }],
   favoriteDrinks: [{
     type: mongoose.Schema.ObjectId,
-    ref: 'Drink', // References drinks marked as favorites
+    ref: 'Drink', 
   }],
   locations: [{
     type: String, // Example: "City, Country" or "Latitude, Longitude"

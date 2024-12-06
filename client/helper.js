@@ -112,6 +112,7 @@ module.exports = {
     handleDrinkError,
     sendPost,
     sendDrinkPost,
+    sendLocPost,
     hideError,
     hideDrinkError,
 }

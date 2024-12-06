@@ -24,7 +24,16 @@ const makeDrink = async (req, res) => {
   try {
     const newDrink = new Drink(drinkData);
     await newDrink.save();
-    console.log(`ingredients ${newDrink.ingredients}`);
+
+    if(newDrink.favorite){
+      const account = await models.Account.findById(req.session.account._id);
+
+      if(!account.favoriteDrinks.includes(newDrink._id)) {
+        account.favoriteDrinks.push(newDrink._id);
+        await account.save();
+      }
+    }
+
     return res.status(201).json({
       name: newDrink.name,
       temperature: newDrink.temperature,
@@ -85,9 +94,48 @@ const removeDrinks = async (req, res) => {
   }
 };
 
+const toggleFavorite = async (req, res) => {
+  if(!req.session.account._id){
+    return res.status(403).json({ error: 'Account not found, please login!' });
+  }
+
+  if (!req.body._id) {
+    return res.status(400).json({ error: 'Drink ID is required to toggle favorite!' });
+  }
+
+  try {
+    const drink = await Drink.findById(req.body._id);
+
+    if(!drink){
+      return res.status(404).json({ error: 'Drink not found!' });
+    }
+
+    drink.favorite = !drink.favorite;
+
+    await drink.save();
+
+    const account = await Account.findById(req.session.account._id);
+
+    if(drink.favorite) {
+      if(!account.favoriteDrinks.includes(drink._id)) {
+        account.favoriteDrinks.push(drink._id);
+      }
+    } else {
+      account.favoriteDrinks = account.favoriteDrinks.filter(id => id.toString() !== drink._id.toString());
+    }
+    await account.save();
+
+    return res.status(200).json({ message: 'Favorite status updated!', favorite: drink.favorite });
+  } catch (err) {
+    console.error('Error toggling favorite status:', err.message);
+    return res.status(500).json({ error: 'An error occurred while updating favorite status.' });
+  }
+};
+
 module.exports = {
   makerPage,
   makeDrink,
   getDrinks,
   removeDrinks,
+  toggleFavorite,
 };

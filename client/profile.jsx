@@ -46,9 +46,8 @@ const FavoriteDrinksSection = ({ favoriteDrinks }) => (
                     <li key={drink._id}>
                         <strong>{drink.name}</strong> - {drink.temperature}
                         <ul>
-                            {drink.ingredients.map((ingredient, index) => (
-                                <li key={index}>{ingredient}</li>
-                            ))}
+                            {drink.ingredients.split(',').map((ingredient, index) => (
+                            <li key={index}>{ingredient.trim()}</li>))}
                         </ul>
                     </li>
                 ))}

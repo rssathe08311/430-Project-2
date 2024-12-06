@@ -22,10 +22,13 @@ const router = (app) => {
   app.get('/drink', mid.requiresLogin, controllers.Drink.makerPage);
   app.post('/drink', mid.requiresLogin, controllers.Drink.makeDrink);
   app.post('/removeDrink', mid.requiresLogin, controllers.Drink.removeDrinks);
+  app.post('/favoriteDrink',mid.requiresLogin, controllers.Drink.toggleFavorite);
 
   app.get('/location', mid.requiresLogin, controllers.Location.makerPage);
   app.post('/location', mid.requiresLogin, controllers.Location.makeLocation);
   app.post('/removeLocation', mid.requiresLogin, controllers.Location.removeLocations);
+
+  app.get('/getExternalLocationData', mid.requiresLogin, controllers.Location.getExternalLocationData);
 
   app.get('/profile', mid.requiresLogin, controllers.Account.makerPage);
   // app.post('/profile', mid.requiresLogin, controllers.Drink.makeDrink);

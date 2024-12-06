@@ -87,6 +87,28 @@ const DrinkList = (props) => {
         }
     };
 
+    const handleFavoriteDrink = async (id) => {
+        try {
+            const response = await fetch('/favoriteDrink', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error('Error favoriting drink:', errorData.error);
+                return;
+            }
+
+            props.triggerReload();
+        } catch (err) {
+            console.error('Error sending favorite request:', err);
+        }
+    };
+
     if(drinks.length === 0) {
         return (
             <div className='drinksList'>
@@ -102,8 +124,19 @@ const DrinkList = (props) => {
             <div key={drink._id} className='drink'>
                 <img src='/assets/img/logo.png' alt="drink" className='drinkFace' />
                 <h3 className='drinkName'>{drink.name}</h3>
+                <div>
+                    <label htmlFor={`favorite-${drink._id}`}>Favorite: </label>
+                    <input
+                        type="checkbox"
+                        id={`favorite-${drink._id}`}
+                        checked={drink.favorite || false}
+                        onChange={(e) => handleFavoriteDrink(drink._id, e.target.checked)}
+                    />
+                </div>
                 <h3 className='drinkAge'>Temperature: {drink.temperature}</h3>
-                <h3 className='drinkIngredients'>Ingredients: {drink.ingredients}</h3>
+                <h3 className='drinkIngredients'>Ingredients: {drink.ingredients.split(',').map((ingredient, index) => (
+        <li key={index}>{ingredient.trim()}</li>
+    ))}</h3>
                 <button onClick={() => handleRemoveDrink(drink._id)}>Delete</button>
             </div>
         );

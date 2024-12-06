@@ -68,7 +68,7 @@ const getUserProfile = async (req, res) => {
     const account = await Account.findOne(query)
       .select('username profilePicture friends favoriteDrinks locations') // Select specific fields
       .populate('friends', 'username profilePicture') // Populate friends
-      .populate('favoriteDrinks', 'name temperature ingredients') // Populate favorite drinks
+      .populate('favoriteDrinks', 'name temperature ingredients')
       .lean() // Convert the document to plain JS object
       .exec();
 

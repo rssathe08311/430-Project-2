@@ -1,3 +1,4 @@
+const axios = require('axios');
 const models = require('../models');
 
 const { Location } = models;
@@ -85,9 +86,32 @@ const removeLocations = async (req, res) => {
   }
 };
 
+// API fetch functionality
+const getExternalLocationData = async (req, res) => {
+  const { query } = req.query;
+
+  if (!query) {
+    return res.status(400).json({ error: 'query parameter is required for mapbox!' });
+  }
+  const mapboxUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json`;
+
+  try {
+    const response = await axios.get(mapboxUrl, {
+      params: {
+        access_token: process.env.MAPBOX_TOKEN,
+      },
+    });
+    return res.status(200).json(response.data);
+  } catch (error) {
+    console.error('Error fetching data from Mapbox API:', error.message);
+    return res.status(500).json({ error: 'Failed to fetch data from Mapbox API!' });
+  }
+};
+
 module.exports = {
   makerPage,
   makeLocation,
   getLocations,
   removeLocations,
+  getExternalLocationData,
 };

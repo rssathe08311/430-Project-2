@@ -5,7 +5,9 @@ const { useState, useEffect, useRef } = React;
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-mapboxgl.accessToken = process.env.MAPBOX_TOKEN;
+mapboxgl.accessToken = window.MAPBOX_TOKEN;
+mapboxgl.workerClass = null;
+
 
 //page for adding/creating new locations to get drinks at
 
@@ -14,7 +16,7 @@ const MapBox = ({locations}) => {
 
     useEffect(() => {
         const map = new mapboxgl.Map({
-            container:mapContainerRef.current,
+            container: mapContainerRef.current,
             style: 'mapbox://styles/mapbox/streets-v11',
             center: [-75.71615970715911, 43.025810763917775],
             zoom: 3,
@@ -23,13 +25,21 @@ const MapBox = ({locations}) => {
         map.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
         locations.forEach((location) => {
-            new mapboxgl.Marker()
-            .setLngLat([location.location.coordinates[0], location.location.coordinates[1]])
-                .setPopup(new mapboxgl.Popup({ offset: 25 }).setText(location.name)) // Popup with location name
-                .addTo(map);
+            if (location.loc && location.loc.coordinates) {
+                new mapboxgl.Marker()
+                    .setLngLat([location.loc.coordinates[0], location.loc.coordinates[1]])
+                    .setPopup(new mapboxgl.Popup({ offset: 25 }).setText(location.name))
+                    .addTo(map);
+            }
         });
 
-        return () => map.remove();
+        const handleResize = () => map.resize();
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+            map.remove();
+        };
     }, [locations]);
 
     return <div ref={mapContainerRef} style={{ width: '100%', height: '500px' }} />;
@@ -40,7 +50,7 @@ const handleLocation = (e, onLocationAdded) => {
     helper.hideDrinkError();
 
     const name = e.target.querySelector('#locName').value;
-    const addy = e.target.querySelector('#locAdd').value;
+    let addy = e.target.querySelector('#locAdd').value;
     const locLong = e.target.querySelector('#locLong').value;
     const locLat = e.target.querySelector('#locLat').value;
 
@@ -49,12 +59,50 @@ const handleLocation = (e, onLocationAdded) => {
         return false;
     }
 
+    if(!addy){
+        addy = '';
+    }
+
+    if (locLong < -180 || locLong > 180 || locLat < -90 || locLat > 90) {
+        helper.handleDrinkError('Longitude must be between -180 and 180, Latitude must be between -90 and 90!');
+        return false;
+    }
+
     helper.sendLocPost(e.target.action, {name, addy, locLong, locLat}, onLocationAdded);
     return false;
 }
 
+
+//temp no mapbox
+//const fetchMapBoxData = async (query) => {
+//    if(!query) {
+//        console.error('Query parameter is missing');
+//        return [];
+//    }
+//
+//    try {
+//        const response = await fetch(`/getExternalLocationData?query=${encodeURIComponent(query)}`);
+//        const data = await response.json();
+//        return data.features || [];
+//    } catch (err) {
+//        console.error('Error fetching Mapbox data:', err);
+//        return [];
+//    }
+//};
+
 const LocationForm = (props) => {
-    return(
+    const [query, setQuery] = useState('');
+    const [results, setResults] = useState([]);
+
+
+//temp no mapbox
+    //const handleFetchData = async () => {
+    //    if (!query.trim()) return;
+    //    const data = await fetchMapBoxData(query);
+    //    setResults(data);
+    //};
+
+    return (
         <form id='LocationForm'
             onSubmit = {(e) => handleLocation(e, props.triggerReload)}
             name='LocationForm'
@@ -63,10 +111,10 @@ const LocationForm = (props) => {
             className='locationForm'
         >
             <label htmlFor='name'>Name: </label>
-            <input id='locationName' type='text' name='name' placeholder='Location Name' />
+            <input id='locName' type='text' name='name' placeholder='Location Name' />
 
             <label htmlFor='addy'>Address: </label>
-            <input id='locationAddress' type='text' name='addy' placeholder='Location Address' />
+            <input id='locAdd' type='text' name='addy' placeholder='Location Address' />
 
             <label htmlFor="locLong">Longitude: </label>
             <input id="locLong" type="number" step="any" name="longitude" placeholder="Longitude" />
@@ -76,20 +124,56 @@ const LocationForm = (props) => {
 
             <button type="submit">Add Location</button>
         </form>
-    )
-}
+    );
+};
+
+
+//const LocationForm = (props) => {
+//    const [query, setQuery] = useState('');
+//    const [results, setResults] = useState([]);
+//
+//    const handleFetchData = async () => {
+//        if (!query.trim()) return;
+//        const data = await fetchMapBoxData(query);
+//        setResults(data);
+//    };
+//
+//    return(
+//        <form id='LocationForm'
+//            onSubmit = {(e) => handleLocation(e, props.triggerReload)}
+//            name='LocationForm'
+//            action='/location'
+//            method='POST'
+//            className='locationForm'
+//        >
+//            <label htmlFor='name'>Name: </label>
+//            <input id='locationName' type='text' name='name' placeholder='Location Name' />
+//
+//            <label htmlFor='addy'>Address: </label>
+//            <input id='locAdd' type='text' name='addy' placeholder='Location Address' />
+//
+//            <label htmlFor="locLong">Longitude: </label>
+//            <input id="locLong" type="number" step="any" name="longitude" placeholder="Longitude" />
+//
+//            <label htmlFor="locLat">Latitude: </label>
+//            <input id="locLat" type="number" step="any" name="latitude" placeholder="Latitude" />
+//
+//            <button type="submit">Add Location</button>
+//        </form>
+//    )
+//}
 
 const LocationList = (props) => {
     const [locations, setLocations] = useState(props.locations);
 
-    useEffect(() => {
-        loadLocationsFromServer = async () => {
-            const response = await fetch('/getLocations');
-            const data = await response.json();
-            setLocations(data.locations);
-        };
-        loadLocationsFromServer();
-    }, [props.reloadLocations]);
+    //useEffect(() => {
+    //    loadLocationsFromServer = async () => {
+    //        const response = await fetch('/getLocations');
+    //        const data = await response.json();
+    //        setLocations(data.locations);
+    //    };
+    //    loadLocationsFromServer();
+    //}, [props.reloadLocations]);
 
     const handleRemoveLocation = async (id) => {
         try{
@@ -151,11 +235,12 @@ const App = () => {
         fetchLocations();
     }, [reloadLocations]);
 
+    /*<!--<div id='map'>
+                <MapBox locations={locations} />
+            </div>--> */
+
     return (
         <div>
-            <div id='map'>
-                <MapBox locations={locations} />
-            </div>
             <div id='makeLocation'>
                 <LocationForm triggerReload={() => setReloadLocations(!reloadLocations)}/>
             </div>
