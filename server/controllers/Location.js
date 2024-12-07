@@ -28,8 +28,8 @@ const makeLocation = async (req, res) => {
   }
 
   const locationData = {
-    name: name,
-    address: address,
+    name,
+    address,
     loc: {
       type: 'Point',
       coordinates: [parseFloat(longitude), parseFloat(latitude)],
@@ -40,16 +40,14 @@ const makeLocation = async (req, res) => {
   try {
     const newLocation = new Location(locationData);
     await newLocation.save();
-    
+
     const account = await models.Account.findById(req.session.account._id);
 
     if (!account.locations.includes(newLocation._id)) {
       account.locations.push(newLocation._id);
       await account.save();
     }
-    
-    
-    
+
     return res.status(201).json({
       name: newLocation.name,
       address: newLocation.address,

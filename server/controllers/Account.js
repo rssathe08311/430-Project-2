@@ -27,7 +27,7 @@ const login = (req, res) => {
 
     req.session.account = Account.toAPI(account);
 
-    return res.json({ redirect: '/maker' });
+    return res.json({ redirect: '/home' });
   });
 };
 
@@ -49,12 +49,41 @@ const signup = async (req, res) => {
     const newAccount = new Account({ username, password: hash });
     await newAccount.save();
     req.session.account = Account.toAPI(newAccount);
-    return res.json({ redirect: '/maker' });
+    return res.json({ redirect: '/home' });
   } catch (err) {
     if (err.code === 11000) {
       return res.status(400).json({ error: 'Username already in use!' });
     }
     return res.status(500).json({ error: 'An error occured!' });
+  }
+};
+
+const changePassword = async (req, res) => {
+  const { username, newPass, newPass2 } = req.body;
+
+  if (!username || !newPass || !newPass2) {
+    return res.status(400).json({ error: 'All fields are required!' });
+  }
+
+  if (newPass !== newPass2) {
+    return res.status(400).json({ error: 'New passwords do not match!' });
+  }
+
+  try {
+    const account = await Account.findOne({ username });
+
+    if (!account) {
+      return res.status(404).json({ error: 'Account not found!' });
+    }
+
+    const hash = await Account.generateHash(newPass);
+    account.password = hash;
+    await account.save();
+
+    return res.status(200).json({ message: 'Password changed successfully!' });
+  } catch (err) {
+    console.error('Error changing password:', err.message);
+    return res.status(500).json({ error: 'An error occurred while changing the password.' });
   }
 };
 
@@ -116,8 +145,27 @@ const getFriends = async (req, res) => {
   }
 };
 
+const getHomeData = async (req, res) => {
+  try {
+    // Fetch all drinks and locations without filtering by user or friends
+    const allDrinks = await models.Drink.find()
+      .select('name temperature ingredients owner')
+      .populate('owner', 'username profilePicture')
+      .lean();
+    const allLocations = await models.Location.find()
+      .select('name address')
+      .populate('owner', 'username profilePicture')
+      .lean();
+
+    return res.json({ drinks: allDrinks, locations: allLocations });
+  } catch (err) {
+    console.error('Error fetching home data:', err.message);
+    return res.status(500).json({ error: 'Error fetching home data.' });
+  }
+};
+
 const searchUsers = async (req, res) => {
-  console.log("searching...")
+  console.log('searching...');
   try {
     const { query } = req.query;
 
@@ -132,7 +180,7 @@ const searchUsers = async (req, res) => {
       .lean()
       .exec();
 
-    console.log("Users: " + users);
+    console.log(`Users: ${users}`);
     return res.json({ users });
   } catch (err) {
     console.error(`Error searching users: ${err.message}`);
@@ -245,15 +293,15 @@ const rejectFriendRequest = async (req, res) => {
 
 const getFriendRequests = async (req, res) => {
   try {
-      const account = await Account.findById(req.session.account._id)
-          .select('friendRequests')
-          .populate('friendRequests', 'username profilePicture')
-          .lean();
+    const account = await Account.findById(req.session.account._id)
+      .select('friendRequests')
+      .populate('friendRequests', 'username profilePicture')
+      .lean();
 
-      return res.status(200).json({ requests: account.friendRequests || [] });
+    return res.status(200).json({ requests: account.friendRequests || [] });
   } catch (err) {
-      console.error('Error fetching friend requests:', err.message);
-      return res.status(500).json({ error: 'Error fetching friend requests.' });
+    console.error('Error fetching friend requests:', err.message);
+    return res.status(500).json({ error: 'Error fetching friend requests.' });
   }
 };
 
@@ -266,10 +314,12 @@ module.exports = {
   login,
   logout,
   signup,
+  changePassword,
   getUserProfile,
   getFriends,
   sendFriendRequest,
   acceptFriendRequest,
   rejectFriendRequest,
   getFriendRequests,
+  getHomeData,
 };

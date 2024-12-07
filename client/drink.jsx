@@ -94,7 +94,7 @@ const DrinkList = (props) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ id }),
+                body: JSON.stringify({ _id: id }),
             });
 
             if (!response.ok) {
@@ -130,7 +130,7 @@ const DrinkList = (props) => {
                         type="checkbox"
                         id={`favorite-${drink._id}`}
                         checked={drink.favorite || false}
-                        onChange={(e) => handleFavoriteDrink(drink._id, e.target.checked)}
+                        onChange={(e) => handleFavoriteDrink(drink._id)}
                     />
                 </div>
                 <h3 className='drinkAge'>Temperature: {drink.temperature}</h3>

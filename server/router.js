@@ -2,7 +2,6 @@ const controllers = require('./controllers');
 const mid = require('./middleware');
 
 const router = (app) => {
-  app.get('/getDomos', mid.requiresLogin, controllers.Domo.getDomos);
   app.get('/getDrinks', mid.requiresLogin, controllers.Drink.getDrinks);
   app.get('/getUserProfile', mid.requiresLogin, controllers.Account.getUserProfile);
   app.get('/getFriends', mid.requiresLogin, controllers.Account.getFriends);
@@ -16,10 +15,9 @@ const router = (app) => {
 
   app.get('/logout', mid.requiresLogin, controllers.Account.logout);
 
-  app.get('/home', mid.requiresLogin, controllers.Home.makerPage);
+  app.post('/changePassword', mid.requiresSecure, mid.requiresLogout, controllers.Account.changePassword);
 
-  app.get('/maker', mid.requiresLogin, controllers.Domo.makerPage);
-  app.post('/maker', mid.requiresLogin, controllers.Domo.makeDomo);
+  app.get('/home', mid.requiresLogin, controllers.Home.makerPage);
 
   app.get('/drink', mid.requiresLogin, controllers.Drink.makerPage);
   app.post('/drink', mid.requiresLogin, controllers.Drink.makeDrink);
@@ -33,13 +31,14 @@ const router = (app) => {
   app.get('/getExternalLocationData', mid.requiresLogin, controllers.Location.getExternalLocationData);
 
   app.get('/profile', mid.requiresLogin, controllers.Account.makerPage);
-  // app.post('/profile', mid.requiresLogin, controllers.Drink.makeDrink);
 
   app.get('/friend', mid.requiresLogin, controllers.Account.friendPage);
   app.post('/sendFriendRequest', mid.requiresLogin, controllers.Account.sendFriendRequest);
   app.post('/acceptFriendRequest', mid.requiresLogin, controllers.Account.acceptFriendRequest);
   app.post('/rejectFriendRequest', mid.requiresLogin, controllers.Account.rejectFriendRequest);
   app.get('/getFriendRequests', mid.requiresLogin, controllers.Account.getFriendRequests);
+
+  app.get('/getHomeData', mid.requiresLogin, controllers.Account.getHomeData);
 
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
 };

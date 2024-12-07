@@ -6,6 +6,9 @@ const { createRoot } = require('react-dom/client');
 
 const ProfileHeader = ({ username, profilePicture }) => (
     <div className="profile-header">
+        <div className="upgrade-container">
+            <button className="upgrade-button">Upgrade to Premium</button> {/* Fake button */}
+        </div>
         <img 
             src={profilePicture || "/assets/img/default-profile.png"} 
             alt={`${username}'s profile picture`} 

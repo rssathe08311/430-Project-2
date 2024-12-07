@@ -1,3 +1,4 @@
+/* Global Reset and Base Styles */
 html, body {
     height: 100%;
     width: 100%;
@@ -10,17 +11,70 @@ html, body {
     color: #333;
 }
 
-#logo {
-    height: 40px;
-    width: 40px;
-    padding-top: 5px;
-    float: left;
+h1, h2, h3 {
+    color: #444;
 }
 
-nav {
+/* Forms */
+form {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+input[type="text"], select, input[type="submit"], input[type="checkbox"] {
     width: 100%;
-    height: 50px;
+    padding: 12px 16px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus, select:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+input[type="submit"] {
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+    transition: background-color 0.3s ease;
+    padding: 12px 20px;
+    margin-top: 20px;
+    width: auto;
+}
+
+input[type="submit"]:hover {
+    background-color: #823cc4;
+}
+
+input::placeholder {
+    color: #aaa;
+}
+
+/* Navigation */
+nav {
     background-color: #444;
+    color: #fff;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -31,115 +85,210 @@ nav a {
     color: #fff;
     text-decoration: none;
     margin-left: 20px;
-    font-size: 1.2em;
+    padding-right: 15px;
 }
 
 nav a:hover {
     text-decoration: underline;
 }
 
-.navlink {
-    padding: 5px;
-    color: white;
-    font-size: 1.3em;
-    transition: background-color 0.4s ease;
-}
-
-.navlink a, .navlink a:link, .navlink a:visited, .navlink a:hover, .navlink a:active {
-    color: white;
-    text-decoration: none;
-    padding: 5px;
-    border-radius: 4px;
-    background-color: #55acee;
-    transition: background-color 0.4s ease;
-}
-
-.navlink a:hover {
-    background-color: #66bdff;
-}
-
-/* Domo and Drink Form */
-.domoForm, .drinkForm {
-    border: 2px solid #338acc;
-    height: 35px;
-    width: 1000px;
-    margin-top: 0px;
-    padding-top: 10px;
-    background-color: #55acee;
-    border-radius: 4px;
-    padding: 10px;
-}
-
-.domoForm label, .drinkForm label {
-    display: inline-block;
-    width: 75px;
-    margin-left: 10px;
-    font-size: 1.2em;
-    color: white;
-}
-
-.domoForm input[type=text], .drinkForm input[type=text] {
-    float: left;
-}
-
-.makeDomoSubmit, .makeDrinkSubmit {
-    transition: background-color 0.4s ease;
-    display: inline-block;
-    width: 90px;
-    background-color: #55acee;
-    border-radius: 2px;
-    color: white;
-    text-decoration: none;
-    text-align: center;
-}
-
-.makeDomoSubmit:hover, .makeDrinkSubmit:hover {
-    background-color: #338acc;
-}
-
-/* Main Form */
-.mainForm {
-    height: 300px;
-    width: 350px;
-    margin: 0 auto;
-    padding-top: 350px;
-    font-size: 1.2em;
-    text-align: center;
-}
-
-.mainForm label {
-    display: inline-block;
-    width: 100px;
-    margin-right: 10px;
-    text-align: right;
-    font-size: 1.2em;
-}
-
-.formSubmit {
-    transition: background-color 0.4s ease;
-    display: block;
-    margin: 0 auto;
-    margin-top: 14px;
-    font-size: 1.2em;
-    width: 100px;
-    background-color: #55acee;
-    border-radius: 2px;
-    color: white;
-    text-decoration: none;
-}
-
-.formSubmit:hover {
-    background-color: #338acc;
-}
-
 /* Profile Section */
-.profile {
+.profile, .location-form, .location-list {
     max-width: 800px;
     margin: 20px auto;
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
+}
+
+.profile-header img, .profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
+}
+
+.profile-section h2, .profile-section h3 {
+    border-bottom: 2px solid #eee;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+/* Drinks */
+.drink, .drink-card {
+    padding: 15px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.drink:hover, .drink-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Drink Form and List */
+.favorite-drinks-grid, .drinksList {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.drinkFace, .drink-name, .drink-temperature, .ingredient-item {
+    font-size: 1rem;
+    color: #555;
+}
+
+.drinkFace {
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+}
+
+/* Buttons */
+button {
+    padding: 8px 16px;
+    font-size: 14px;
+    color: #ffffff;
+    background-color: #007bff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #823cc4;
+}
+
+button.delete {
+    background-color: #dc3545;
+}
+
+button.delete:hover {
+    background-color: #a71d2a;
+}
+
+#logo {
+    height: 40px;
+}
+.hidden {
+    display: none;
+}
+
+/*Friend cards*/
+.friend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.friend-item img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+}
+
+.friendTitle {
+    text-align: center;
+}
+
+/* Friend Search Form */
+.friendSearchForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px auto;
+    padding: 15px;
+    max-width: 400px;
+    background-color: #fff; /* White background for contrast */
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.friendSearchForm label {
+    font-size: 18px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.friendSearchForm input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.friendSearchForm input[type="submit"] {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff; /* Blue button */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.friendSearchForm input[type="submit"]:hover {
+    background-color: #823cc4; /* Darker blue on hover */
+}
+
+/* Search Results Container */
+.searchResults {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Individual Search Result */
+.searchResult {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 150px;
+    text-align: center;
+}
+
+.userProfilePicture {
+    width: 80px; /* Smaller image */
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border: 2px solid #007bff; 
+}
+
+.userName {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+/* Empty Results Message */
+.emptyResults {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #777; /* Subtle gray */
+    margin-top: 20px;
 }
 
 .profile-header {
@@ -159,363 +308,117 @@ nav a:hover {
     margin: 10px 0;
 }
 
-.profile-section {
-    margin-bottom: 20px;
-}
-
-.profile-section h2, .profile-section h3 {
-    border-bottom: 2px solid #eee;
-    padding-bottom: 5px;
-    margin-bottom: 10px;
-}
-
-.profile-section p {
-    color: #666;
-}
-
-.profile-picture {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #ddd;
-}
-
-/* Drink-related styles */
-#drinks {
-    width: 40%;
-    min-width: 400px;
-    border: 2px solid #85ade9;
-    border-radius: 4px;
-    margin: 0 auto;
-    margin-top: 100px;
-}
-
-.drink {
-    width: 95%;
-    margin: 0 auto;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    border: 2px solid #55acee;
-    border-radius: 4px;
-    background-color: #55acee;
-    padding: 10px;
-    min-height: 60px;
-    overflow: hidden;
-}
-
-.drink:hover {
-    border-color: rgba(255,255,255, 0.8);
-    background-color: #66bfff;
-}
-
-img.drinkFace {
-    margin-left: 25px;
-    margin-right: 10px;
-    height: 50px;
-    width: 50px;
-    border-radius: 4px;
-    margin-top: 10px;
-    float: left;
-}
-
-h3.emptyDrink {
-    width: 400px;
-    font-size: 1.5em;
-    margin: 0 auto;
-    text-align: center;
-    margin-top: 18px;
-}
-
-h3.drinkName {
-    float: left;
-    width: 200px;
-    font-weight: bold;
-    padding-left: 65px;
-    font-size: 1.5em;
-}
-
-h3.drinkTemperature {
-    float: right;
-    text-align: left;
-    width: 100px;
-    font-weight: bold;
-    padding-right: 40px;
-    font-size: 1.5em;
-}
-
-/* Domo-related styles */
-#domos {
-    width: 40%;
-    min-width: 400px;
-    border: 2px solid #55acee;
-    border-radius: 4px;
-    margin: 0 auto;
-    margin-top: 100px;
-}
-
-.domo {
-    width: 95%;
-    margin: 0 auto;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    border: 2px solid #55acee;
-    border-radius: 4px;
-    background-color: #55acee;
-    padding: 10px;
-    min-height: 60px;
-    overflow: hidden;
-}
-
-.domo:hover {
-    border-color: rgba(255,255,255, 0.8);
-    background-color: #66bfff;
-}
-
-img.domoFace {
-    margin-left: 25px;
-    margin-right: 10px;
-    height: 50px;
-    width: 50px;
-    border-radius: 4px;
-    margin-top: 10px;
-    float: left;
-}
-
-h3.emptyDomo {
-    width: 400px;
-    font-size: 1.5em;
-    margin: 0 auto;
-    text-align: center;
-    margin-top: 18px;
-}
-
-h3.domoName {
-    float: left;
-    width: 200px;
-    font-weight: bold;
-    padding-left: 65px;
-    font-size: 1.5em;
-}
-
-h3.domoAge {
-    float: right;
-    text-align: left;
-    width: 100px;
-    font-weight: bold;
-    padding-right: 40px;
-    font-size: 1.5em;
-}
-
-.hidden {
-    display: none;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #f9f9f9;
-    color: #333;
-    margin: 0;
-    padding: 0;
+/* Responsive Design */
+@media (max-width: 600px) {
+    .profile, .location-form, .location-list {
+        padding: 10px;
     }
+}
 
-    h1, h2, h3 {
-    color: #444;
-    }
 
-    nav {
-    background-color: #444;
-    color: #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    }
-
-    nav a {
-    color: #fff;
-    text-decoration: none;
-    margin-left: 20px;
-    }
-
-    nav a:hover {
-    text-decoration: underline;
-    }
-
-    #logo {
+.owner-profile-picture {
+    width: 40px;
     height: 40px;
-    width: 100px;
-    /*border-radius: 50%;*/
-    }
-
-    /* Profile Section */
-    .profile {
-    max-width: 800px;
-    margin: 20px auto;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    }
-
-    .profile-header {
-    text-align: center;
-    margin-bottom: 20px;
-    }
-
-    .profile-header img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-bottom: 10px;
-    border: 2px solid #ddd;
-    }
-
-    .profile-header h1, .profile-header h2 {
-    margin: 10px 0;
-    }
-
-    .profile-section {
-    margin-bottom: 20px;
-    }
-
-    .profile-section h2, .profile-section h3 {
-    border-bottom: 2px solid #eee;
-    padding-bottom: 5px;
-    margin-bottom: 10px;
-    }
-
-    .profile-section p {
-    color: #666;
-    }
-
-    .profile-picture {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 2px solid #ddd;
-        }
-
-
-    ul {
-    list-style: none;
-    padding: 0;
-    }
-
-    ul li {
-    margin: 10px 0;
-    }
-
-    .friend-item {
+    border-radius: 50%; /* Makes the image circular */
+    margin-right: 10px;
+  }
+  
+  .owner-info {
     display: flex;
     align-items: center;
-    gap: 10px;
-    }
+  }
 
-    .friend-item img {
+/* Home Layout */
+.home-container {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    gap: 20px;
+    margin: 0 auto;
+    max-width: 1200px;
+  }
+  
+  .ads-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding-top: 50px;
+  }
+  
+  .ad-image {
+    width: 100%;
+    max-width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Section Styling */
+  .home-section {
+    margin-bottom: 20px;
+  }
+  
+  .drinks-grid,
+  .locations-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  .drink-card,
+  .location-card {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .owner-profile-picture {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border: 1px solid #ccc;
-    }
+    margin-right: 10px;
+  }
+  
+  .logoImg {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+    padding-top: 30px;
+  }
+  
+  .profile-header {
+    position: relative; 
+}
 
-    strong {
-    font-weight: bold;
-    color: #222;
-    }
+.upgrade-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 100;
+}
 
-    /* Mobile Responsiveness */
-    @media (max-width: 600px) {
-    .profile {
-        padding: 10px;
-    }
+.upgrade-button {
+    padding: 10px 20px;
+    background-color: #ff9800; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
 
-    nav {
-        background-color: #444;
-        color: #fff;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 20px;
-    }
-
-    .nav-links {
-        display: flex;
-        gap: 20px; /* Space between links */
-    }
-
-    .nav-links a {
-        color: #fff;
-        text-decoration: none;
-    }
-
-    .nav-links a:hover {
-        text-decoration: underline;
-    }
-
-    }
-
-
-    .drinkForm {
-        max-width: 400px;
-        margin: 20px auto;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        background-color: #f9f9f9;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        font-family: Arial, sans-serif;
-    }
-    
-    .formGroup {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 15px;
-    }
-    
-    label {
-        font-weight: bold;
-        margin-bottom: 5px;
-        font-size: 0.9rem;
-    }
-    
-    input[type="text"], 
-    select, 
-    input[type="submit"] {
-        padding: 8px 10px;
-        font-size: 0.9rem;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        outline: none;
-    }
-    
-    input[type="checkbox"] {
-        width: auto;
-        align-self: flex-start;
-    }
-    
-    input[type="submit"] {
-        background-color: #007BFF;
-        color: white;
-        cursor: pointer;
-        font-weight: bold;
-        transition: background-color 0.3s ease;
-        border: none;
-    }
-    
-    input[type="submit"]:hover {
-        background-color: #0056b3;
-    }
-    
-    .drinkForm input::placeholder {
-        color: #aaa;
-    }
-    
-    .drinkForm input:focus, 
-    .drinkForm select:focus {
-        border-color: #007BFF;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-    }
-    
+.upgrade-button:hover {
+    background-color: #f57c00;
+}

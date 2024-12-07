@@ -53,7 +53,7 @@ const LocationForm = (props) => {
             <label htmlFor="locLat">Latitude:</label>
             <input id="locLat" type="number" step="any" placeholder="Latitude" />
 
-            <button type="submit">Add Location</button>
+            <button className='makeLocationSubmit' type="submit">Add Location</button>
         </form>
     );
 };
@@ -61,7 +61,7 @@ const LocationForm = (props) => {
 const LocationList = (props) => {
     const handleRemoveLocation = async (id) => {
         try {
-            await fetch('/removeLocation', {
+            const response = await fetch('/removeLocation', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -91,9 +91,6 @@ const LocationList = (props) => {
                 <div key={location._id} className="location-item">
                     <h3>{location.name}</h3>
                     <p>Address: {location.address}</p>
-                    <p>
-                        Coordinates: {location.loc.coordinates[0]}, {location.loc.coordinates[1]}
-                    </p>
                     <button onClick={() => handleRemoveLocation(location._id)}>Remove</button>
                 </div>
             ))}
@@ -121,7 +118,6 @@ const App = () => {
 
     return (
         <div>
-            <h1>Location Manager</h1>
             <LocationForm triggerReload={() => setReloadLocations(!reloadLocations)} />
             <LocationList locations={locations} triggerReload={() => setReloadLocations(!reloadLocations)} />
         </div>
