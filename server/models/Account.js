@@ -41,12 +41,17 @@ const AccountSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Account',
   }],
+  friendRequests: [{
+    type: mongoose.Schema.ObjectId,
+    ref: 'Account',
+  }],
   favoriteDrinks: [{
     type: mongoose.Schema.ObjectId,
-    ref: 'Drink', 
+    ref: 'Drink',
   }],
   locations: [{
-    type: String, // Example: "City, Country" or "Latitude, Longitude"
+    type: mongoose.Schema.ObjectId,
+    ref: 'Location',
   }],
   createdDate: {
     type: Date,

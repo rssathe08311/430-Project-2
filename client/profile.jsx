@@ -41,37 +41,58 @@ const FavoriteDrinksSection = ({ favoriteDrinks }) => (
     <div className="profile-section">
         <h2>Favorite Drinks</h2>
         {favoriteDrinks && favoriteDrinks.length > 0 ? (
-            <ul>
+            <div className="favorite-drinks-grid">
                 {favoriteDrinks.map(drink => (
-                    <li key={drink._id}>
-                        <strong>{drink.name}</strong> - {drink.temperature}
-                        <ul>
+                    <div key={drink._id} className="drink-card">
+                        <h3 className="drink-name">{drink.name}</h3>
+                        <p className="drink-temperature">{drink.temperature}</p>
+                        <ul className="drink-ingredients">
                             {drink.ingredients.split(',').map((ingredient, index) => (
-                            <li key={index}>{ingredient.trim()}</li>))}
+                                <li key={index} className="ingredient-item">{ingredient.trim()}</li>
+                            ))}
                         </ul>
-                    </li>
+                    </div>
                 ))}
-            </ul>
+            </div>
         ) : (
             <p>No favorite drinks added yet.</p>
         )}
     </div>
 );
 
+
 const LocationsSection = ({ locations }) => (
     <div className="profile-section">
         <h2>Locations</h2>
         {locations && locations.length > 0 ? (
-            <ul>
-                {locations.map((location, index) => (
-                    <li key={index}>{location}</li>
+            <div className="favorite-drinks-grid">
+                {locations.map(location => (
+                    <div key={location._id} className="drink-card">
+                        <h3 className="drink-name">{location.name}</h3>
+                        <p className="drink-temperature"><strong>Address:</strong> {location.address}</p>
+                    </div>
                 ))}
-            </ul>
+            </div>
         ) : (
             <p>No locations added yet.</p>
         )}
     </div>
 );
+
+//const LocationsSection = ({ locations }) => (
+//    <div className="profile-section">
+//        <h2>Locations</h2>
+//        {locations && locations.length > 0 ? (
+//            <ul>
+//                {locations.map((location, index) => (
+//                    <li key={index}>{location.name}</li>
+//                ))}
+//            </ul>
+//        ) : (
+//            <p>No locations added yet.</p>
+//        )}
+//    </div>
+//);
 
 const Profile = () => {
     const [profileData, setProfileData] = useState({
@@ -92,6 +113,8 @@ const Profile = () => {
     }, []);
 
     const { username, profilePicture, friends, favoriteDrinks, locations } = profileData;
+
+    console.log("Locations:", locations);
 
     return (
         <div className="profile">

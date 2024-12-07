@@ -6,8 +6,21 @@ const { Location } = models;
 const makerPage = async (req, res) => res.render('location');
 
 const makeLocation = async (req, res) => {
-  if (!req.body.name || !req.body.locLong || !req.body.locLat) {
-    return res.status(400).json({ error: 'Name, latitude, and longitude are all required!' });
+  const { name, address, coordinates } = req.body;
+
+  // Validate inputs
+  if (!name || !address || !Array.isArray(coordinates) || coordinates.length !== 2) {
+    return res.status(400).json({
+      error: 'Name, address, and coordinates (as [longitude, latitude]) are required!',
+    });
+  }
+
+  const [longitude, latitude] = coordinates;
+
+  if (longitude < -180 || longitude > 180 || latitude < -90 || latitude > 90) {
+    return res.status(400).json({
+      error: 'Longitude must be between -180 and 180, Latitude must be between -90 and 90!',
+    });
   }
 
   if (!req.session.account._id) {
@@ -15,11 +28,11 @@ const makeLocation = async (req, res) => {
   }
 
   const locationData = {
-    name: req.body.name,
-    address: req.body.address || '',
+    name: name,
+    address: address,
     loc: {
       type: 'Point',
-      coordinates: [parseFloat(req.body.locLong), parseFloat(req.body.locLat)],
+      coordinates: [parseFloat(longitude), parseFloat(latitude)],
     },
     owner: req.session.account._id,
   };
@@ -27,6 +40,16 @@ const makeLocation = async (req, res) => {
   try {
     const newLocation = new Location(locationData);
     await newLocation.save();
+    
+    const account = await models.Account.findById(req.session.account._id);
+
+    if (!account.locations.includes(newLocation._id)) {
+      account.locations.push(newLocation._id);
+      await account.save();
+    }
+    
+    
+    
     return res.status(201).json({
       name: newLocation.name,
       address: newLocation.address,

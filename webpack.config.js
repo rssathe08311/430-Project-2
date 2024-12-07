@@ -8,6 +8,7 @@ module.exports = {
         login: './client/login.jsx',
         profile: './client/profile.jsx',
         location: './client/location.jsx',
+        friend: './client/friend.jsx',
     },
     module: {
         rules: [

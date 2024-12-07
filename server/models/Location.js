@@ -12,7 +12,7 @@ const LocationnSchema = new mongoose.Schema({
   },
   address: {
     type: String,
-    required: false,
+    required: true,
     trim: true,
   },
   loc: {

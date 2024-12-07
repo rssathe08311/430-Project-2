@@ -5,6 +5,8 @@ const router = (app) => {
   app.get('/getDomos', mid.requiresLogin, controllers.Domo.getDomos);
   app.get('/getDrinks', mid.requiresLogin, controllers.Drink.getDrinks);
   app.get('/getUserProfile', mid.requiresLogin, controllers.Account.getUserProfile);
+  app.get('/getFriends', mid.requiresLogin, controllers.Account.getFriends);
+  app.get('/searchUsers', mid.requiresLogin, controllers.Account.searchUsers);
   app.get('/getLocations', mid.requiresLogin, controllers.Location.getLocations);
 
   app.get('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
@@ -22,16 +24,22 @@ const router = (app) => {
   app.get('/drink', mid.requiresLogin, controllers.Drink.makerPage);
   app.post('/drink', mid.requiresLogin, controllers.Drink.makeDrink);
   app.post('/removeDrink', mid.requiresLogin, controllers.Drink.removeDrinks);
-  app.post('/favoriteDrink',mid.requiresLogin, controllers.Drink.toggleFavorite);
+  app.post('/favoriteDrink', mid.requiresLogin, controllers.Drink.toggleFavorite);
 
   app.get('/location', mid.requiresLogin, controllers.Location.makerPage);
-  app.post('/location', mid.requiresLogin, controllers.Location.makeLocation);
+  app.post('/makelocation', mid.requiresLogin, controllers.Location.makeLocation);
   app.post('/removeLocation', mid.requiresLogin, controllers.Location.removeLocations);
 
   app.get('/getExternalLocationData', mid.requiresLogin, controllers.Location.getExternalLocationData);
 
   app.get('/profile', mid.requiresLogin, controllers.Account.makerPage);
   // app.post('/profile', mid.requiresLogin, controllers.Drink.makeDrink);
+
+  app.get('/friend', mid.requiresLogin, controllers.Account.friendPage);
+  app.post('/sendFriendRequest', mid.requiresLogin, controllers.Account.sendFriendRequest);
+  app.post('/acceptFriendRequest', mid.requiresLogin, controllers.Account.acceptFriendRequest);
+  app.post('/rejectFriendRequest', mid.requiresLogin, controllers.Account.rejectFriendRequest);
+  app.get('/getFriendRequests', mid.requiresLogin, controllers.Account.getFriendRequests);
 
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
 };

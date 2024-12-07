@@ -25,10 +25,10 @@ const makeDrink = async (req, res) => {
     const newDrink = new Drink(drinkData);
     await newDrink.save();
 
-    if(newDrink.favorite){
+    if (newDrink.favorite) {
       const account = await models.Account.findById(req.session.account._id);
 
-      if(!account.favoriteDrinks.includes(newDrink._id)) {
+      if (!account.favoriteDrinks.includes(newDrink._id)) {
         account.favoriteDrinks.push(newDrink._id);
         await account.save();
       }
@@ -95,7 +95,7 @@ const removeDrinks = async (req, res) => {
 };
 
 const toggleFavorite = async (req, res) => {
-  if(!req.session.account._id){
+  if (!req.session.account._id) {
     return res.status(403).json({ error: 'Account not found, please login!' });
   }
 
@@ -106,7 +106,7 @@ const toggleFavorite = async (req, res) => {
   try {
     const drink = await Drink.findById(req.body._id);
 
-    if(!drink){
+    if (!drink) {
       return res.status(404).json({ error: 'Drink not found!' });
     }
 
@@ -114,14 +114,16 @@ const toggleFavorite = async (req, res) => {
 
     await drink.save();
 
-    const account = await Account.findById(req.session.account._id);
+    const account = await models.Account.findById(req.session.account._id);
 
-    if(drink.favorite) {
-      if(!account.favoriteDrinks.includes(drink._id)) {
+    if (drink.favorite) {
+      if (!account.favoriteDrinks.includes(drink._id)) {
         account.favoriteDrinks.push(drink._id);
       }
     } else {
-      account.favoriteDrinks = account.favoriteDrinks.filter(id => id.toString() !== drink._id.toString());
+      account.favoriteDrinks = account.favoriteDrinks.filter(
+        (id) => id.toString() !== drink._id.toString(),
+      );
     }
     await account.save();
 
