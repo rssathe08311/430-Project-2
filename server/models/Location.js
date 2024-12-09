@@ -18,7 +18,7 @@ const LocationnSchema = new mongoose.Schema({
   loc: {
     type: {
       type: String,
-      enum: ['Point'], // GeoJSON type must be "Point" for Mapbox
+      enum: ['Point'],
       required: true,
     },
     coordinates: {

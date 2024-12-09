@@ -2,13 +2,12 @@ const helper = require('./helper.js');
 const React = require('react');
 const {createRoot} = require('react-dom/client');
 const { useState, useEffect, useRef } = React;
-//import mapboxgl from 'mapbox-gl';
-//import 'mapbox-gl/dist/mapbox-gl.css';
-//
-//mapboxgl.accessToken = window.MAPBOX_TOKEN;
-//mapboxgl.workerClass = null;
 
 
+// name: handleLocationSubmit
+// input: Event object (e), callback function (onLocAdded)
+// output: None (Handles form submission and sends data to the server)
+// description: Validates location data, handles errors, and sends a POST request to create a new location.
 const handleLocationSubmit = async (e, onLocAdded) => {
     e.preventDefault();
     helper.hideDrinkError();
@@ -32,6 +31,10 @@ const handleLocationSubmit = async (e, onLocAdded) => {
     return false;
 };
 
+// name: LocationForm
+// input: Props object containing triggerReload callback
+// output: JSX structure for the location form
+// description: Renders a form for adding new locations and triggers a callback on form submission.
 const LocationForm = (props) => {
     return (
         <form
@@ -58,6 +61,10 @@ const LocationForm = (props) => {
     );
 };
 
+// name: LocationList
+// input: Props object containing locations array and triggerReload callback
+// output: JSX structure displaying a list of locations or a message if no locations are available
+// description: Renders a list of locations with options to remove individual items.
 const LocationList = (props) => {
     const handleRemoveLocation = async (id) => {
         try {
@@ -98,6 +105,11 @@ const LocationList = (props) => {
     );
 };
 
+
+// name: App
+// input: None
+// output: JSX structure containing the LocationForm and LocationList components
+// description: Manages state for reloading drinks and renders the main application layout.
 const App = () => {
     const [locations, setLocations] = useState([]);
     const [reloadLocations, setReloadLocations] = useState(false);
@@ -119,11 +131,14 @@ const App = () => {
     return (
         <div>
             <LocationForm triggerReload={() => setReloadLocations(!reloadLocations)} />
+                {}
             <LocationList locations={locations} triggerReload={() => setReloadLocations(!reloadLocations)} />
         </div>
     );
 };
 
+// name: init
+// description: Initializes the React application by rendering the App component into the DOM.
 const init = () => {
     const root = createRoot(document.getElementById('location'));
     root.render(<App />);

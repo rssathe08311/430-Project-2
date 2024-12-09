@@ -3,6 +3,11 @@ const React = require('react');
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
 
+// name: handleDrink
+// input: Event object (e), callback function (onDrinkAdded)
+// output: Boolean indicating success or failure of handling the drink form submission
+// description: Validates drink form input fields, displays an error if validation fails, 
+// and sends a POST request to add a new drink using helper functions.
 const handleDrink = (e, onDrinkAdded) => {
     e.preventDefault();
     helper.hideDrinkError();
@@ -21,6 +26,11 @@ const handleDrink = (e, onDrinkAdded) => {
     return false;
 }
 
+// name: DrinkForm
+// input: Props object with a triggerReload function
+// output: JSX form element for adding a new drink
+// description: Renders a drink form with fields for name, temperature, ingredients, and a favorite toggle.
+// Submits the form using the handleDrink function.
 const DrinkForm = (props) => {
     return(
         <form id="drinkForm"
@@ -53,6 +63,11 @@ const DrinkForm = (props) => {
     )
 }
 
+// name: DrinkList
+// input: Props object with drinks array, reloadDrinks flag, and triggerReload function
+// output: JSX list of drinks or a message indicating no drinks exist
+// description: Displays a list of drinks fetched from the server. 
+// Allows removing or toggling favorite status of drinks, and triggers data reload.
 const DrinkList = (props) => {
     const [drinks, setDrinks] = useState(props.drinks);
 
@@ -149,6 +164,10 @@ const DrinkList = (props) => {
     );
 };
 
+// name: App
+// input: None
+// output: JSX structure containing the DrinkForm and DrinkList components
+// description: Manages state for reloading drinks and renders the main application layout.
 const App = () => {
     const [reloadDrinks, setReloadDrinks] = useState(false);
 
@@ -164,6 +183,8 @@ const App = () => {
     );
 };
 
+// name: init
+// description: Initializes the React application by rendering the App component into the DOM.
 const init = () => {
     const root = createRoot(document.getElementById('drink'));
     root.render( <App />);

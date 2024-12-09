@@ -1,10 +1,18 @@
-const axios = require('axios');
 const models = require('../models');
 
 const { Location } = models;
 
+// name: makerPage
+// input: Express request (req) and response (res) objects.
+// output: Renders the "location" page.
+// description: Displays the location creation and management page.
 const makerPage = async (req, res) => res.render('location');
 
+// name: makeLocation
+// input: Express request and response objects with location data.
+// output: JSON response with the created location's details or an error message.
+// description: Handles creating a new location, validating inputs,
+// and associating it with the current user's account.
 const makeLocation = async (req, res) => {
   const { name, address, coordinates } = req.body;
 
@@ -63,6 +71,10 @@ const makeLocation = async (req, res) => {
   }
 };
 
+// name: getLocations
+// input: Express request (req) and response (res) objects.
+// output: JSON response with an array of locations or an error message.
+// description: Retrieves all locations associated with the current user's account.
 const getLocations = async (req, res) => {
   try {
     const query = { owner: req.session.account._id };
@@ -75,6 +87,10 @@ const getLocations = async (req, res) => {
   }
 };
 
+// name: removeLocations
+// input: Express request (req) and response (res) objects with a location ID or name.
+// output: JSON response confirming deletion or an error message.
+// description: Deletes a specified location associated with the current user's account.
 const removeLocations = async (req, res) => {
   try {
     if (!req.session.account._id) {
@@ -107,32 +123,9 @@ const removeLocations = async (req, res) => {
   }
 };
 
-// API fetch functionality
-const getExternalLocationData = async (req, res) => {
-  const { query } = req.query;
-
-  if (!query) {
-    return res.status(400).json({ error: 'query parameter is required for mapbox!' });
-  }
-  const mapboxUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json`;
-
-  try {
-    const response = await axios.get(mapboxUrl, {
-      params: {
-        access_token: process.env.MAPBOX_TOKEN,
-      },
-    });
-    return res.status(200).json(response.data);
-  } catch (error) {
-    console.error('Error fetching data from Mapbox API:', error.message);
-    return res.status(500).json({ error: 'Failed to fetch data from Mapbox API!' });
-  }
-};
-
 module.exports = {
   makerPage,
   makeLocation,
   getLocations,
   removeLocations,
-  getExternalLocationData,
 };

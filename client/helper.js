@@ -2,10 +2,11 @@
    displays it to the user. Will be hidden by other events that could
    end in an error.
 */
-const handleError = (message) => {
-  document.getElementById('errorMessage').textContent = message;
-  document.getElementById('domoMessage').classList.remove('hidden');
-};
+
+// name: handleDrinkError
+// input: message (string) - The error message to display.
+// output: None
+// description: Sets the error message in the DOM and displays it to the user. The error message is displayed in an HTML element with ID 'drinkMessage'. The message will be hidden when other events occur that might trigger errors.
 
 const handleDrinkError = (message) => {
   document.getElementById('errorMessage').textContent = message;
@@ -13,9 +14,14 @@ const handleDrinkError = (message) => {
 };
 
 
-/* Sends post requests to the server using fetch. Will look for various
-   entries in the response JSON object, and will handle them appropriately.
-*/
+// name: sendPost
+// input: 
+//   - url (string) - The URL for the POST request.
+//   - data (object) - The data to send in the POST request body.
+//   - handler (function) - Optional callback to handle the response.
+// output: None
+// description: Sends a POST request to the specified URL with the given data. 
+// Handles the JSON response by checking for redirection, errors, and calling the optional handler function.
 const sendPost = async (url, data, handler) => {
   const response = await fetch(url, {
     method: 'POST',
@@ -26,7 +32,7 @@ const sendPost = async (url, data, handler) => {
   });
 
   const result = await response.json();
-  document.getElementById('domoMessage').classList.add('hidden');
+  document.getElementById('drinkMessage').classList.add('hidden');
 
   if(result.redirect) {
     window.location = result.redirect;
@@ -41,6 +47,14 @@ const sendPost = async (url, data, handler) => {
   }
 };
 
+// name: sendDrinkPost
+// input: 
+//   - url (string) - The URL for the POST request.
+//   - data (object) - The data to send in the POST request body.
+//   - handler (function) - Optional callback to handle the response.
+// output: None
+// description: Sends a POST request to the specified URL with the given data. 
+// Handles the JSON response by checking for redirection, errors, and calling the optional handler function.
 const sendDrinkPost = async (url, data, handler) => {
   const response = await fetch(url, {
       method: 'POST',
@@ -66,7 +80,14 @@ const sendDrinkPost = async (url, data, handler) => {
   }
 };
 
-
+// name: sendLocPost
+// input: 
+//   - url (string) - The URL for the POST request.
+//   - data (object) - The data to send in the POST request body.
+//   - handler (function) - Optional callback to handle the response.
+// output: None
+// description: Sends a POST request to the specified URL with the given data. 
+// Handles the JSON response by checking for redirection, errors, and calling the optional handler function.
 const sendLocPost = async (url, data, handler) => {
   const response = await fetch(url, {
     method: 'POST',
@@ -92,6 +113,14 @@ const sendLocPost = async (url, data, handler) => {
   }
 }
 
+// name: sendFriendPost
+// input: 
+//   - url (string) - The URL for the POST request.
+//   - data (object) - The data to send in the POST request body.
+//   - handler (function) - Optional callback to handle the response.
+// output: None
+// description: Sends a POST request to the specified URL with the given data. 
+// Handles the JSON response by checking for redirection, errors, and calling the optional handler function.
 const sendFriendPost = async (url, data, handler) => {
   const response = await fetch(url, {
     method: 'POST',
@@ -117,10 +146,11 @@ const sendFriendPost = async (url, data, handler) => {
   }
 }
 
-const hideError = () => {
-    document.getElementById('domoMessage').classList.add('hidden');
-};
 
+// name: hideDrinkError
+// input: None
+// output: None
+// description: Hides the error message by adding the 'hidden' class to the element with the ID 'drinkMessage'.
 const hideDrinkError = () => {
   const drinkMessage = document.getElementById('drinkMessage');
   console.log('drinkMessage element:', drinkMessage);
@@ -133,12 +163,10 @@ const hideDrinkError = () => {
 
 
 module.exports = {
-    handleError,
     handleDrinkError,
     sendPost,
     sendDrinkPost,
     sendLocPost,
     sendFriendPost,
-    hideError,
     hideDrinkError,
 }

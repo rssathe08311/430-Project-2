@@ -3,15 +3,38 @@ const models = require('../models');
 
 const { Account } = models;
 
+// name: loginPage
+// input: Express request (req) and response (res) objects.
+// output: Renders the login page.
+// description: Handles rendering of the login page for user authentication.
 const loginPage = (req, res) => res.render('login');
+
+// name: makerPage
+// input: Express request (req) and response (res) objects.
+// output: Renders the user's profile page.
+// description: Handles rendering of the profile page for authenticated users.
 const makerPage = async (req, res) => res.render('profile');
+
+// name: friendPage
+// input: Express request (req) and response (res) objects.
+// output: Renders the friend page.
+// description: Handles rendering of the friend page for managing friends.
 const friendPage = async (req, res) => res.render('friend');
 
+// name: logout
+// input: Express request (req) and response (res) objects.
+// output: Redirects the user to the homepage after destroying their session.
+// description: Logs out the user by clearing the session data.
 const logout = (req, res) => {
   req.session.destroy();
   res.redirect('/');
 };
 
+// name: login
+// input: Express request (req) and response (res) objects.
+// Expects username and password in the request body.
+// output: JSON response indicating success or failure of login.
+// description: Authenticates the user and starts a session if credentials are valid.
 const login = (req, res) => {
   const username = `${req.body.username}`;
   const pass = `${req.body.pass}`;
@@ -31,6 +54,11 @@ const login = (req, res) => {
   });
 };
 
+// name: signup
+// input: Express request (req) and response (res) objects.
+// Expects username, password, and password confirmation in the request body.
+// output: JSON response indicating success or failure of signup.
+// description: Registers a new user account and starts a session if successful.
 const signup = async (req, res) => {
   const username = `${req.body.username}`;
   const pass = `${req.body.pass}`;
@@ -58,6 +86,11 @@ const signup = async (req, res) => {
   }
 };
 
+// name: changePassword
+// input: Express request (req) and response (res) objects.
+// Expects username, new password, and confirmation of new password in the request body.
+// output: JSON response indicating success or failure of the password change.
+// description: Allows a user to change their password after validating the inputs.
 const changePassword = async (req, res) => {
   const { username, newPass, newPass2 } = req.body;
 
@@ -87,6 +120,12 @@ const changePassword = async (req, res) => {
   }
 };
 
+// name: getUserProfile
+// input: Express request (req) and response (res) objects.
+// Expects session information to identify the logged-in user.
+// output: JSON response containing user profile details or an error message.
+// description: Retrieves the profile information of the logged-in user,
+// including friends, favorite drinks, and locations.
 const getUserProfile = async (req, res) => {
   try {
     if (!req.session.account || !req.session.account._id) {
@@ -96,11 +135,11 @@ const getUserProfile = async (req, res) => {
     // Fetch the user profile
     const query = { _id: req.session.account._id };
     const account = await Account.findOne(query)
-      .select('username profilePicture friends favoriteDrinks locations') // Select specific fields
-      .populate('friends', 'username profilePicture') // Populate friends
+      .select('username profilePicture friends favoriteDrinks locations')
+      .populate('friends', 'username profilePicture')
       .populate('favoriteDrinks', 'name temperature ingredients')
       .populate('locations', 'name address')
-      .lean() // Convert the document to plain JS object
+      .lean()
       .exec();
 
     // Check if the account exists
@@ -122,6 +161,11 @@ const getUserProfile = async (req, res) => {
   }
 };
 
+// name: getFriends
+// input: Express request (req) and response (res) objects.
+// Expects session information to identify the logged-in user.
+// output: JSON response containing the user's list of friends or an error message.
+// description: Retrieves the list of friends for the logged-in user.
 const getFriends = async (req, res) => {
   try {
     if (!req.session.account || !req.session.account._id) {
@@ -145,6 +189,10 @@ const getFriends = async (req, res) => {
   }
 };
 
+// name: getHomeData
+// input: Express request (req) and response (res) objects.
+// output: JSON response containing all drinks and locations available in the system.
+// description: Retrieves all drinks and locations from the database for display on the homepage.
 const getHomeData = async (req, res) => {
   try {
     // Fetch all drinks and locations without filtering by user or friends
@@ -164,6 +212,12 @@ const getHomeData = async (req, res) => {
   }
 };
 
+// name: searchUsers
+// input: Express request (req) and response (res) objects.
+// Expects a query parameter in the request to filter users by username.
+// output: JSON response containing a list of matching users or an error message.
+// description: Searches for users whose usernames match the query parameter
+// using a case-insensitive regular expression.
 const searchUsers = async (req, res) => {
   console.log('searching...');
   try {
@@ -188,6 +242,11 @@ const searchUsers = async (req, res) => {
   }
 };
 
+// name: sendFriendRequest
+// input: Express request (req) and response (res) objects.
+// Expects the friend ID in the request body and session data for the sender.
+// output: JSON response indicating success or failure of sending the friend request.
+// description: Sends a friend request from the logged-in user to another user.
 const sendFriendRequest = async (req, res) => {
   const { friendId } = req.body;
 
@@ -220,6 +279,11 @@ const sendFriendRequest = async (req, res) => {
   }
 };
 
+// name: acceptFriendRequest
+// input: Express request (req) and response (res) objects.
+// Expects the sender's user ID in the request body and session data for the recipient.
+// output: JSON response indicating success or failure of accepting the friend request.
+// description: Accepts a friend request, adding both users to each other's friends list.
 const acceptFriendRequest = async (req, res) => {
   const { senderId } = req.body;
 
@@ -260,6 +324,11 @@ const acceptFriendRequest = async (req, res) => {
   }
 };
 
+// name: rejectFriendRequest
+// input: Express request (req) and response (res) objects.
+// Expects the sender's user ID in the request body and session data for the recipient.
+// output: JSON response indicating success or failure of rejecting the friend request.
+// description: Rejects a friend request by removing it from the recipient's friend requests list.
 const rejectFriendRequest = async (req, res) => {
   const { senderId } = req.body;
 
@@ -291,6 +360,11 @@ const rejectFriendRequest = async (req, res) => {
   }
 };
 
+// name: getFriendRequests
+// input: Express request (req) and response (res) objects.
+// Expects session data for the logged-in user.
+// output: JSON response containing a list of friend requests or an error message.
+// description: Retrieves the list of friend requests for the logged-in user.
 const getFriendRequests = async (req, res) => {
   try {
     const account = await Account.findById(req.session.account._id)

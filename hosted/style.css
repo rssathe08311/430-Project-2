@@ -102,6 +102,10 @@ nav a:hover {
     padding: 20px;
 }
 
+.location-list {
+    background: none;
+}
+
 .profile-header img, .profile-picture {
     width: 100px;
     height: 100px;
@@ -126,7 +130,7 @@ nav a:hover {
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.drink:hover, .drink-card:hover {
+.drink:hover, .drink-card:hover, .location-card:hover, .location-item:hover, .searchResult:hover, .friendRequest:hover, .friend-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -182,13 +186,6 @@ button:hover {
     background-color: #823cc4;
 }
 
-button.delete {
-    background-color: #dc3545;
-}
-
-button.delete:hover {
-    background-color: #a71d2a;
-}
 
 #logo {
     height: 40px;
@@ -247,7 +244,7 @@ button.delete:hover {
     padding: 10px 20px;
     font-size: 16px;
     color: #fff;
-    background-color: #007bff; /* Blue button */
+    background-color: #007bff; 
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -255,7 +252,7 @@ button.delete:hover {
 }
 
 .friendSearchForm input[type="submit"]:hover {
-    background-color: #823cc4; /* Darker blue on hover */
+    background-color: #823cc4;
 }
 
 /* Search Results Container */
@@ -281,6 +278,27 @@ button.delete:hover {
     width: 150px;
     text-align: center;
 }
+
+.profile-section ul {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap if they overflow */
+    gap: 15px; /* Add spacing between items */
+    padding: 0;
+    list-style: none;
+}
+
+.friend-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 150px;
+    text-align: center;
+}
+
 
 .userProfilePicture {
     width: 80px; /* Smaller image */
@@ -390,12 +408,16 @@ button.delete:hover {
   }
   
   .drink-card,
+  .location-item,
   .location-card {
     padding: 15px;
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .location-item {
+    margin-bottom: 20px;
   }
   
   .owner-profile-picture {
@@ -436,4 +458,56 @@ button.delete:hover {
 
 .upgrade-button:hover {
     background-color: #f57c00;
+}
+
+.drink-card button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.drink-card button:hover {
+    background-color: #823cc4;
+}
+
+
+.drink-ingredients {
+    list-style-type: disc;
+    margin: 0; 
+    padding: 0; 
+    padding-left: 20px; 
+    font-size: 14px; 
+    color: #333;
+}
+
+.ingredient-item {
+    margin-bottom: 5px; 
+    font-weight: 400; 
+}
+
+.docTitle {
+    text-align: center;
+}
+
+.endpoint {
+    margin-bottom: 20px;
+    padding-left: 20px;
+}
+
+.endpoint p {
+    padding-left: 20px;
+}
+.endpoint h2 {
+    margin: 10px 0;
+}
+.endpoint p {
+    margin: 5px 0;
+}
+.endpoint .description {
+    font-style: italic;
 }

@@ -3,6 +3,11 @@ const React = require('react');
 const {createRoot} = require('react-dom/client');
 const { useState, useEffect } = React;
 
+// name: FriendForm
+// input: Props object with an onSearchResults callback function
+// output: JSX form element for searching users
+// description: Provides a search input field and button to query the server for users by username. 
+// Displays the results via the onSearchResults callback.
 const FriendForm = ({ onSearchResults }) => {
     const [searchQuery, setSearchQuery] = useState('');
 
@@ -35,6 +40,11 @@ const FriendForm = ({ onSearchResults }) => {
     );
 };
 
+// name: SearchResults
+// input: Props object with results array and onSendRequest callback function
+// output: JSX list of user search results or a message indicating no users were found
+// description: Displays a list of users matching the search query. 
+// Each result includes a profile picture, username, and a button to send a friend request.
 const SearchResults = ({ results, onSendRequest }) => {
     if (results.length === 0) {
         return (
@@ -61,6 +71,11 @@ const SearchResults = ({ results, onSendRequest }) => {
     );
 };
 
+// name: FriendRequests
+// input: Props object with requests array, onAccept callback, and onReject callback
+// output: JSX list of pending friend requests or a message indicating no pending requests
+// description: Displays a list of pending friend requests. 
+// Allows the user to accept or reject each request using the provided callback functions.
 const FriendRequests = ({ requests, onAccept, onReject }) => {
     if(requests.length === 0) {
         return <h3>No Pending Friend Requests!</h3>;
@@ -85,6 +100,11 @@ const FriendRequests = ({ requests, onAccept, onReject }) => {
     );
 };
 
+// name: App
+// input: None
+// output: JSX for the main application layout, including friend search, requests, and friend list sections
+// description: Manages the state and interactions for searching users, sending/accepting/rejecting friend requests, 
+// and displaying the list of current friends. Fetches data from the backend API for friend requests and friends.
 const App = () => {
     const [searchResults, setSearchResults] = useState([]);
     const [friendRequests, setFriendRequests] = useState([]);
@@ -217,7 +237,8 @@ const App = () => {
     );
 };
 
-
+// name: init
+// description: Initializes the React application by rendering the App component into the DOM.
 const init = () => {
     const root = createRoot(document.getElementById('friend'));
     root.render(<App />);

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Endpoint Documentation</title>
+    <link rel="stylesheet" type="text/css" href="/assets/style.css"/>
+</head>
+<body>
+    <nav>
+      <a href="/home"><img id="logo" src="/assets/img/full-logo.png" alt="face logo"/></a>
+      <div class="nav-links">
+          <a href="/home">Home</a>
+          <a href="/friend">Friends</a>
+          <a href="/drink">Drinks</a>
+          <a href="/location">Locations</a>
+          <a href="/profile">Profile</a>
+          <a href="/documentation">Documentation</a>
+          <a href="/logout">Log out</a>
+      </div> 
+  </nav>
+
+    <h1 class="docTitle">API Documentation</h1>
+
+    <!-- Template for each endpoint -->
+    <div class="endpoint drink-card">
+        <h2>URL: /login</h2>
+        <p><strong>Supported Methods:</strong> GET</p>
+        <p><strong>Middleware:</strong> None</p>
+        <p><strong>Query Params:</strong> None</p>
+        <p class="description">Renders the login page.</p>
+        <p><strong>Return Type(s):</strong> HTML</p>
+    </div>
+
+    <div class="endpoint drink-card">
+        <h2>URL: /profile</h2>
+        <p><strong>Supported Methods:</strong> GET</p>
+        <p><strong>Middleware:</strong> Requires Login</p>
+        <p><strong>Query Params:</strong> None</p>
+        <p class="description">Renders the profile page of the logged-in user.</p>
+        <p><strong>Return Type(s):</strong> HTML</p>
+    </div>
+
+    <div class="endpoint drink-card">
+        <h2>URL: /friend</h2>
+        <p><strong>Supported Methods:</strong> GET</p>
+        <p><strong>Middleware:</strong> Requires Login</p>
+        <p><strong>Query Params:</strong> None</p>
+        <p class="description">Renders the friend's page.</p>
+        <p><strong>Return Type(s):</strong> HTML</p>
+    </div>
+
+    <div class="endpoint drink-card">
+        <h2>URL: /login</h2>
+        <p><strong>Supported Methods:</strong> POST</p>
+        <p><strong>Middleware:</strong> None</p>
+        <p><strong>Query Params:</strong> None</p>
+        <p class="description">Authenticates the user with a username and password and starts a session.</p>
+        <p><strong>Return Type(s):</strong> JSON</p>
+    </div>
+
+    <div class="endpoint drink-card">
+        <h2>URL: /logout</h2>
+        <p><strong>Supported Methods:</strong> GET</p>
+        <p><strong>Middleware:</strong> Requires Login</p>
+        <p><strong>Query Params:</strong> None</p>
+        <p class="description">Logs out the user and destroys the session. Redirects to the home page.</p>
+        <p><strong>Return Type(s):</strong> Redirect</p>
+    </div>
+
+    <div class="endpoint drink-card">
+        <h2>URL: /signup</h2>
+        <p><strong>Supported Methods:</strong> POST</p>
+        <p><strong>Middleware:</strong> None</p>
+        <p><strong>Query Params:</strong> None</p>
+        <p class="description">Registers a new user with a username and password. Starts a session upon success.</p>
+        <p><strong>Return Type(s):</strong> JSON</p>
+    </div>
+
+    <div class="endpoint drink-card">
+        <h2>URL: /changePassword</h2>
+        <p><strong>Supported Methods:</strong> POST</p>
+        <p><strong>Middleware:</strong> Requires Login</p>
+        <p><strong>Query Params:</strong> None</p>
+        <p class="description">Allows the user to change their password after verifying their credentials.</p>
+        <p><strong>Return Type(s):</strong> JSON</p>
+    </div>
+
+    <div class="endpoint drink-card">
+        <h2>URL: /getUserProfile</h2>
+        <p><strong>Supported Methods:</strong> GET</p>
+        <p><strong>Middleware:</strong> Requires Login</p>
+        <p><strong>Query Params:</strong> None</p>
+        <p class="description">Fetches the user profile, including username, profile picture, friends, favorite drinks, and locations.</p>
+        <p><strong>Return Type(s):</strong> JSON</p>
+    </div>
+
+    <div class="endpoint drink-card">
+        <h2>URL: /getFriends</h2>
+        <p><strong>Supported Methods:</strong> GET</p>
+        <p><strong>Middleware:</strong> Requires Login</p>
+        <p><strong>Query Params:</strong> None</p>
+        <p class="description">Fetches the list of friends for the logged-in user.</p>
+        <p><strong>Return Type(s):</strong> JSON</p>
+    </div>
+
+    <div class="endpoint drink-card">
+        <h2>URL: /getHomeData</h2>
+        <p><strong>Supported Methods:</strong> GET</p>
+        <p><strong>Middleware:</strong> Requires Login</p>
+        <p><strong>Query Params:</strong> None</p>
+        <p class="description">Retrieves a list of all drinks and locations without user-specific filters.</p>
+        <p><strong>Return Type(s):</strong> JSON</p>
+    </div>
+
+    <div class="endpoint drink-card">
+        <h2>URL: /searchUsers</h2>
+        <p><strong>Supported Methods:</strong> GET</p>
+        <p><strong>Middleware:</strong> None</p>
+        <p><strong>Query Params:</strong> query</p>
+        <p class="description">Searches for users by username based on the query parameter.</p>
+        <p><strong>Return Type(s):</strong> JSON</p>
+    </div>
+
+    <div class="endpoint drink-card">
+        <h2>URL: /sendFriendRequest</h2>
+        <p><strong>Supported Methods:</strong> POST</p>
+        <p><strong>Middleware:</strong> Requires Login</p>
+        <p><strong>Query Params:</strong> None</p>
+        <p class="description">Sends a friend request to another user by their ID.</p>
+        <p><strong>Return Type(s):</strong> JSON</p>
+    </div>
+
+    <div class="endpoint drink-card">
+        <h2>URL: /acceptFriendRequest</h2>
+        <p><strong>Supported Methods:</strong> POST</p>
+        <p><strong>Middleware:</strong> Requires Login</p>
+        <p><strong>Query Params:</strong> None</p>
+        <p class="description">Accepts a pending friend request from a specific user.</p>
+        <p><strong>Return Type(s):</strong> JSON</p>
+    </div>
+
+    <div class="endpoint drink-card">
+        <h2>URL: /rejectFriendRequest</h2>
+        <p><strong>Supported Methods:</strong> POST</p>
+        <p><strong>Middleware:</strong> Requires Login</p>
+        <p><strong>Query Params:</strong> None</p>
+        <p class="description">Rejects a pending friend request from a specific user.</p>
+        <p><strong>Return Type(s):</strong> JSON</p>
+    </div>
+
+    <div class="endpoint drink-card">
+        <h2>URL: /getFriendRequests</h2>
+        <p><strong>Supported Methods:</strong> GET</p>
+        <p><strong>Middleware:</strong> Requires Login</p>
+        <p><strong>Query Params:</strong> None</p>
+        <p class="description">Retrieves a list of pending friend requests for the logged-in user.</p>
+        <p><strong>Return Type(s):</strong> JSON</p>
+    </div>
+
+    <div class="endpoint drink-card">
+        <h2>URL: /drink</h2>
+        <p><strong>Supported Methods:</strong> GET</p>
+        <p><strong>Middleware:</strong> Requires Login</p>
+        <p><strong>Query Params:</strong> None</p>
+        <p class="description">Renders the drink creation page.</p>
+        <p><strong>Return Type(s):</strong> HTML</p>
+    </div>
+
+    <div class="endpoint drink-card">
+        <h2>URL: /makeDrink</h2>
+        <p><strong>Supported Methods:</strong> POST</p>
+        <p><strong>Middleware:</strong> Requires Login</p>
+        <p><strong>Body Params:</strong></p>
+        <ul>
+            <li><strong>name</strong>: The name of the drink (string, required).</li>
+            <li><strong>temperature</strong>: The temperature of the drink (string, required).</li>
+            <li><strong>ingredients</strong>: Ingredients of the drink (array of strings, optional).</li>
+            <li><strong>favorite</strong>: Mark the drink as favorite (boolean, optional).</li>
+        </ul>
+        <p class="description">Creates a new drink for the logged-in user.</p>
+        <p><strong>Return Type(s):</strong> JSON</p>
+    </div>
+
+    <div class="endpoint drink-card">
+        <h2>URL: /getDrinks</h2>
+        <p><strong>Supported Methods:</strong> GET</p>
+        <p><strong>Middleware:</strong> Requires Login</p>
+        <p><strong>Query Params:</strong> None</p>
+        <p class="description">Retrieves all drinks created by the logged-in user.</p>
+        <p><strong>Return Type(s):</strong> JSON</p>
+    </div>
+
+    <div class="endpoint drink-card">
+        <h2>URL: /removeDrinks</h2>
+        <p><strong>Supported Methods:</strong> POST</p>
+        <p><strong>Middleware:</strong> Requires Login</p>
+        <p><strong>Body Params:</strong></p>
+        <ul>
+            <li><strong>id</strong>: The ID of the drink to delete (string, optional).</li>
+            <li><strong>name</strong>: The name of the drink to delete (string, optional).</li>
+        </ul>
+        <p class="description">Deletes a specific drink owned by the logged-in user based on ID or name.</p>
+        <p><strong>Return Type(s):</strong> JSON</p>
+    </div>
+
+    <div class="endpoint drink-card">
+        <h2>URL: /toggleFavorite</h2>
+        <p><strong>Supported Methods:</strong> PATCH</p>
+        <p><strong>Middleware:</strong> Requires Login</p>
+        <p><strong>Body Params:</strong></p>
+        <ul>
+            <li><strong>_id</strong>: The ID of the drink to toggle favorite status (string, required).</li>
+        </ul>
+        <p class="description">Toggles the favorite status of a specific drink for the logged-in user.</p>
+        <p><strong>Return Type(s):</strong> JSON</p>
+    </div>
+
+    <div class="endpoint drink-card">
+        <h2>URL: /home</h2>
+        <p><strong>Supported Methods:</strong> GET</p>
+        <p><strong>Middleware:</strong> Requires Login</p>
+        <p><strong>Query Params:</strong> None</p>
+        <p class="description">Renders the home page for the logged-in user.</p>
+        <p><strong>Return Type(s):</strong> HTML</p>
+    </div>
+
+    <div class="endpoint drink-card">
+        <h2>URL: /docsPage</h2>
+        <p><strong>Supported Methods:</strong> GET</p>
+        <p><strong>Middleware:</strong> None</p>
+        <p><strong>Query Params:</strong> None</p>
+        <p class="description">Renders the documentation page for the application.</p>
+        <p><strong>Return Type(s):</strong> HTML</p>
+    </div>
+
+    <div class="endpoint drink-card">
+    <h2>URL: /makerPage</h2>
+    <p><strong>Supported Methods:</strong> GET</p>
+    <p><strong>Middleware:</strong> Requires Login</p>
+    <p><strong>Query Params:</strong> None</p>
+    <p class="description">Renders the location page for the logged-in user.</p>
+    <p><strong>Return Type(s):</strong> HTML</p>
+</div>
+
+<div class="endpoint drink-card">
+    <h2>URL: /makeLocation</h2>
+    <p><strong>Supported Methods:</strong> POST</p>
+    <p><strong>Middleware:</strong> Requires Login</p>
+    <p><strong>Query Params:</strong> None</p>
+    <p><strong>Request Body:</strong></p>
+    <ul>
+        <li><strong>name</strong> (string): Name of the location (required).</li>
+        <li><strong>address</strong> (string): Address of the location (required).</li>
+        <li><strong>coordinates</strong> (array of numbers): [longitude, latitude] coordinates of the location (required).</li>
+    </ul>
+    <p class="description">Creates a new location and links it to the logged-in user's account.</p>
+    <p><strong>Return Type(s):</strong> JSON</p>
+</div>
+
+<div class="endpoint drink-card">
+    <h2>URL: /getLocations</h2>
+    <p><strong>Supported Methods:</strong> GET</p>
+    <p><strong>Middleware:</strong> Requires Login</p>
+    <p><strong>Query Params:</strong> None</p>
+    <p class="description">Retrieves all locations created by the logged-in user.</p>
+    <p><strong>Return Type(s):</strong> JSON</p>
+</div>
+
+<div class="endpoint drink-card">
+    <h2>URL: /removeLocations</h2>
+    <p><strong>Supported Methods:</strong> POST</p>
+    <p><strong>Middleware:</strong> Requires Login</p>
+    <p><strong>Query Params:</strong> None</p>
+    <p><strong>Request Body:</strong></p>
+    <ul>
+        <li><strong>id</strong> (string): ID of the location to delete (optional).</li>
+        <li><strong>name</strong> (string): Name of the location to delete (optional).</li>
+    </ul>
+    <p class="description">Deletes a location by ID or name if it belongs to the logged-in user.</p>
+    <p><strong>Return Type(s):</strong> JSON</p>
+</div>
+
+
+</body>
+</html>

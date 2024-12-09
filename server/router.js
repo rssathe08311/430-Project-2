@@ -18,6 +18,7 @@ const router = (app) => {
   app.post('/changePassword', mid.requiresSecure, mid.requiresLogout, controllers.Account.changePassword);
 
   app.get('/home', mid.requiresLogin, controllers.Home.makerPage);
+  app.get('/documentation', mid.requiresLogin, controllers.Home.docsPage);
 
   app.get('/drink', mid.requiresLogin, controllers.Drink.makerPage);
   app.post('/drink', mid.requiresLogin, controllers.Drink.makeDrink);
@@ -27,8 +28,6 @@ const router = (app) => {
   app.get('/location', mid.requiresLogin, controllers.Location.makerPage);
   app.post('/makelocation', mid.requiresLogin, controllers.Location.makeLocation);
   app.post('/removeLocation', mid.requiresLogin, controllers.Location.removeLocations);
-
-  app.get('/getExternalLocationData', mid.requiresLogin, controllers.Location.getExternalLocationData);
 
   app.get('/profile', mid.requiresLogin, controllers.Account.makerPage);
 
@@ -41,6 +40,11 @@ const router = (app) => {
   app.get('/getHomeData', mid.requiresLogin, controllers.Account.getHomeData);
 
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
+
+  app.all('*', (req, res) => {
+    console.warn(`Attempted to access invalid route: ${req.path}`);
+    return res.redirect('/home');
+  });
 };
 
 module.exports = router;

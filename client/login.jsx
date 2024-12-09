@@ -2,15 +2,19 @@ const helper = require('./helper.js');
 const React = require('react');
 const {createRoot} = require('react-dom/client');
 
+// name: handleLogin
+// input: Event object (e)
+// output: None (Handles form submission for login)
+// description: Validates login credentials and sends a POST request to the server.
 const handleLogin = (e) => {
     e.preventDefault();
-    helper.hideError();
+    helper.hideDrinkError();
 
     const username = e.target.querySelector('#user').value;
     const pass = e.target.querySelector('#pass').value;
 
     if(!username || !pass) {
-        helper.handleError('Username or password is empty!');
+        helper.handleDrinkError('Username or password is empty!');
         return false;
     }
 
@@ -18,21 +22,26 @@ const handleLogin = (e) => {
     return false;
 }
 
+// name: handleSignup
+// input: Event object (e)
+// output: None (Handles form submission for signup)
+// description: Validates signup credentials, checks if passwords match, 
+// and sends a POST request to the server.
 const handleSignup = (e) => {
     e.preventDefault();
-    helper.hideError();
+    helper.hideDrinkError();
 
     const username = e.target.querySelector('#user').value;
     const pass = e.target.querySelector('#pass').value;
     const pass2 = e.target.querySelector('#pass2').value;
 
     if(!username || !pass || !pass2) {
-        helper.handleError('All fields are required!');
+        helper.handleDrinkError('All fields are required!');
         return false;
     }
 
     if(pass !== pass2) {
-        helper.handleError('Passwords do not match!');
+        helper.handleDrinkError('Passwords do not match!');
         return false;
     }
 
@@ -40,21 +49,26 @@ const handleSignup = (e) => {
     return false;
 }
 
+// name: handlePasswordChange
+// input: Event object (e)
+// output: None (Handles form submission for password change)
+// description: Validates password change data, checks if new passwords match, 
+// and sends a POST request to the server.
 const handlePasswordChange = (e) => {
     e.preventDefault();
-    helper.hideError();
+    helper.hideDrinkError();
 
     const username = e.target.querySelector('#username').value;
     const newPass = e.target.querySelector('#newPass').value;
     const newPass2 = e.target.querySelector('#newPass2').value;
 
     if (!username || !newPass || !newPass2) {
-        helper.handleError('All fields are required!');
+        helper.handleDrinkError('All fields are required!');
         return false;
     }
 
     if (newPass !== newPass2) {
-        helper.handleError('New passwords do not match!');
+        helper.handleDrinkError('New passwords do not match!');
         return false;
     }
 
@@ -62,7 +76,10 @@ const handlePasswordChange = (e) => {
     return false;
 };
 
-
+// name: LoginWindow
+// input: None
+// output: JSX structure for the login form
+// description: Renders a login form and handles login submissions.
 const LoginWindow = (props) => {
     return (
         <form id="loginForm"
@@ -81,6 +98,10 @@ const LoginWindow = (props) => {
     );
 };
 
+// name: SignupWindow
+// input: None
+// output: JSX structure for the signup form
+// description: Renders a signup form and handles signup submissions.
 const SignupWindow = (props) => {
     return (
         <form id="signupForm"
@@ -101,6 +122,10 @@ const SignupWindow = (props) => {
     )
 }
 
+// name: ChangePasswordWindow
+// input: None
+// output: JSX structure for the change password form
+// description: Renders a change password form and handles password change submissions.
 const ChangePasswordWindow = (props) => {
     return (
         <form id="changePasswordForm"
@@ -121,7 +146,11 @@ const ChangePasswordWindow = (props) => {
     );
 };
 
-
+// name: init
+// input: None
+// output: None
+// description: Initializes the application, sets up button event listeners, 
+// and renders the LoginWindow by default.
 const init = () => {
     const loginButton = document.getElementById('loginButton');
     const signupButton = document.getElementById('signupButton');

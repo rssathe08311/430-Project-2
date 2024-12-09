@@ -2,8 +2,18 @@ const models = require('../models');
 
 const { Drink } = models;
 
+// name: makerPage
+// input: Express request (req) and response (res) objects.
+// output: Renders the drink creation page.
+// description: Displays the page for users to create a new drink.
 const makerPage = async (req, res) => res.render('drink');
 
+// name: makeDrink
+// input: Express request (req) and response (res) objects.
+// Expects drink details in the request body and session data for the logged-in user.
+// output: JSON response with the created drink details or an error message.
+// description: Creates a new drink with the provided details.
+// If marked as favorite, it updates the user's favorite drinks list.
 const makeDrink = async (req, res) => {
   if (!req.body.name || !req.body.temperature) {
     return res.status(400).json({ error: 'Both name and temperature are required!' });
@@ -50,6 +60,11 @@ const makeDrink = async (req, res) => {
   }
 };
 
+// name: getDrinks
+// input: Express request (req) and response (res) objects.
+// Expects session data for the logged-in user.
+// output: JSON response containing the user's drinks or an error message.
+// description: Retrieves all drinks created by the logged-in user.
 const getDrinks = async (req, res) => {
   try {
     const query = { owner: req.session.account._id };
@@ -62,6 +77,11 @@ const getDrinks = async (req, res) => {
   }
 };
 
+// name: removeDrinks
+// input: Express request (req) and response (res) objects.
+// Expects a drink ID or name in the request body and session data for the logged-in user.
+// output: JSON response indicating success or failure of deleting the drink.
+// description: Deletes a drink created by the logged-in user based on the provided ID or name.
 const removeDrinks = async (req, res) => {
   try {
     if (!req.session.account._id) {
@@ -94,6 +114,11 @@ const removeDrinks = async (req, res) => {
   }
 };
 
+// name: toggleFavorite
+// input: Express request (req) and response (res) objects.
+// Expects a drink ID in the request body and session data for the logged-in user.
+// output: JSON response indicating the updated favorite status of the drink or an error message.
+// description: Toggles the favorite status of a drink and updates the user's favorite drinks list.
 const toggleFavorite = async (req, res) => {
   if (!req.session.account._id) {
     return res.status(403).json({ error: 'Account not found, please login!' });
