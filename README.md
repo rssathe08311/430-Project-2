@@ -2,6 +2,8 @@
 
 ForeCafe is a full-stack social web application for sharing favorite café drinks, saving café locations, and connecting with friends. The project uses an MVC-style Node.js backend with MongoDB for persistence, Redis-backed sessions for authentication state, Handlebars for page templates, and React bundles for interactive client-side views.
 
+### Accessible at -> https://forecafe-777e7f57c981.herokuapp.com/home
+
 ## Table of Contents
 
 - [Overview](#overview)
