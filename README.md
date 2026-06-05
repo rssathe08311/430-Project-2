@@ -107,7 +107,7 @@ The app serves Handlebars views from the Express server and mounts page-specific
 
 Make sure the following services and tools are available locally:
 
-- Node.js 18+ (the CI workflow tests Node 18, 20, and 22)
+- Node.js 18 or higher
 - npm
 - MongoDB
 - Redis
@@ -147,7 +147,7 @@ The server reads configuration from environment variables with `dotenv`.
 | `PORT` | No | Primary port used by the Express server. |
 | `NODE_PORT` | No | Fallback port if `PORT` is not set. |
 | `MONGODB_URI` | No | MongoDB connection string. Defaults to `mongodb://127.0.0.1/ForeCafe`. |
-| `REDISCLOUD_URL` | Yes | Redis connection URL used for session storage. |
+| `REDISCLOUD_URL` | Yes | Redis connection URL used for session storage. Despite the name, it can point to a local Redis instance or a hosted Redis service. |
 
 Example:
 
